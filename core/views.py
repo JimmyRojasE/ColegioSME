@@ -10,5 +10,11 @@ def matriculasEst(request):
 def matriculasApd(request):
     return render(request, 'matricula/matricula-apd.html')
 
+def matriculasMdr(request):
+    return render(request, 'matricula/matricula-mdr.html')
+
+def matriculasPdr(request):
+    return render(request, 'matricula/matricula-pdr.html')
+
 def login(request):
     return render(request, 'auth/login.html')
