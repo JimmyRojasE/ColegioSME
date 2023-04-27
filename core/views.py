@@ -18,3 +18,9 @@ def matriculasPdr(request):
 
 def login(request):
     return render(request, 'auth/login.html')
+
+def crearCurso(request):
+    return render(request, 'curso/crear-curso.html')
+    
+def crearProfesor(request):
+    return render(request, 'profesor/crear-profesor.html')

@@ -1,14 +1,7 @@
-html, body {
+html,
+body {
     background-color: #87b7f5;
-    height: 75%;
 }
 .container {
-    border-radius: 5px;
-    background-color: #313338;
-}
-.navbar {
     background-color: #17171a !important;
-}
-.nav-link {
-    color: white;
 }

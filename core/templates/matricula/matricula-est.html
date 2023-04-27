@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/matriculas.css' %}">
+{% endblock %}
 
 {% block content %}
 
@@ -78,10 +83,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4 mb-3">
-            <label for="">Ciudad</label>
-            <input type="text" class="form-control" id="">
-        </div>
         <div class="col-sm-4 mb-3">
             <label for="">Teléfono Domicilio</label>
             <input type="text" class="form-control" id="">
@@ -168,17 +169,4 @@
         <button class="btn btn-primary mb-3" type="submit">Enviar información</button>
     </div>
 </form>
-{% endblock %}
-
-{% block styles %}
-<style>
-    label,
-    hr {
-        color: white;
-    }
-
-    body>div>form>div:nth-child(1)>div {
-        margin-top: 10px;
-    }
-</style>
 {% endblock %}
