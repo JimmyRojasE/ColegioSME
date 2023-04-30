@@ -16,6 +16,9 @@ def matriculasMdr(request):
 def matriculasPdr(request):
     return render(request, 'matricula/matricula-pdr.html')
 
+def matriculasInfoest(request):
+    return render(request, 'matricula/matricula-infoest.html')
+
 def login(request):
     return render(request, 'auth/login.html')
 
