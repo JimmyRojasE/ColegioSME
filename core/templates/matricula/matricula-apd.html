@@ -8,6 +8,7 @@
 {% block content %}
 
 <form action="" class="mt-3" id="matricula">
+    <h1>Datos del titular</h1>
     <div class="row">
         <div class="col-sm-6 mb-3">
             <label for="">RUN Apoderado</label>
@@ -51,8 +52,76 @@
             <label for="">Relación con el estudiante</label>
             <select class="form-select">
                 <option value="" selected>Elija una opción...</option>
-                <option value="1">Madre</option>
-                <option value="2">Padre</option>
+                <option value="3">Abuela</option>
+                <option value="4">Abuelo</option>
+                <option value="5">Tio</option>
+                <option value="6">Tia</option>
+                <option value="7">Otro</option>
+            </select>
+        </div>
+        <label for="" class="col-sm-1 col-form-label align-self-center">Otro: </label>
+        <div class="col-sm-4 align-self-center">
+            <input type="text" class="form-control" id="" placeholder="Indique cuál">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="" class="col-sm-3 col-form-label align-self-center">¿Viven en el mismo hogar?</label>
+        <div class="col-sm-7 align-self-center">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="mismoHogar" id="mismoHogarSi" value="Si">
+                <label class="form-check-label" for="mismoHogarSi">Si</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="mismoHogar" id="mismoHogarNo" value="No">
+                <label class="form-check-label" for="mismoHogarNo">No</label>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h1>Datos del suplente</h1>
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <label for="">RUN Apoderado</label>
+            <input type="text" class="form-control" id="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 mb-3">
+            <label for="">Nombres</label>
+            <input type="text" class="form-control" id="">
+        </div>
+        <div class="col-sm-4 mb-3">
+            <label for="">Apellido Paterno</label>
+            <input type="text" class="form-control" id="">
+        </div>
+        <div class="col-sm-4 mb-3">
+            <label for="">Apellido Materno</label>
+            <input type="text" class="form-control" id="">
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-8 mb-3">
+            <label for="">Correo electrónico</label>
+            <input type="email" class="form-control" id="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 mb-3">
+            <label for="">Teléfono Domicilio</label>
+            <input type="text" class="form-control" id="">
+        </div>
+        <div class="col-sm-4 mb-3">
+            <label for="">Celular de Emergencias</label>
+            <input type="text" class="form-control" id="">
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <label for="">Relación con el estudiante</label>
+            <select class="form-select">
+                <option value="" selected>Elija una opción...</option>
                 <option value="3">Abuela</option>
                 <option value="4">Abuelo</option>
                 <option value="5">Tio</option>
