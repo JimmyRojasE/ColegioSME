@@ -47,7 +47,7 @@
     <label for="" class="col-sm-3 col-form-label align-self-center">Actualmente vive con:</label>
     <div class="col-sm-4 align-self-center">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="viveCon" id="ambos" value="">
+        <input class="form-check-input" type="radio" name="viveCon" id="ambos" value="" checked>
         <label class="form-check-label" for="ambos">Ambos padres</label>
       </div>
       <div class="form-check form-check-inline">
@@ -74,7 +74,7 @@
     </div>
     <div class="col-sm-3 align-self-center">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="perteneceEtnia" id="perteneceEtniaSi" value="">
+        <input class="form-check-input" type="radio" name="perteneceEtnia" id="perteneceEtniaSi" value="" checked>
         <label class="form-check-label" for="perteneceEtniaSi">Si</label>
       </div>
       <div class="form-check form-check-inline">
@@ -90,13 +90,11 @@
     <label for="" class="col-sm-3 col-form-label align-self-center">Estudiante Prioritario</label>
     <div class="col-sm-4 align-self-center">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="estudiantePrioritario" id="estudiantePrioritarioSi"
-               value="">
+        <input class="form-check-input" type="radio" name="estudiantePrioritario" id="estudiantePrioritarioSi" value="" checked>
         <label class="form-check-label" for="estudiantePrioritarioSi">Si</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="estudiantePrioritario" id="estudiantePrioritarioNo"
-               value="">
+        <input class="form-check-input" type="radio" name="estudiantePrioritario" id="estudiantePrioritarioNo" value="">
         <label class="form-check-label" for="estudiantePrioritarioNo">No</label>
       </div>
     </div>
@@ -106,11 +104,11 @@
       (PIE)</label>
     <div class="col-sm-3 align-self-center">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieSi" value="">
+        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieSi" value="" onclick="ocultarAutorizaEvaluacion()" checked>
         <label class="form-check-label" for="postulantePieSi">Si</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieNo" value="">
+        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieNo" value="" onclick="mostrarAutorizaEvaluacion()">
         <label class="form-check-label" for="postulantePieNo">No</label>
       </div>
     </div>
@@ -118,16 +116,16 @@
       <input type="text" class="form-control" id="" placeholder="Diagnóstico">
     </div>
   </div>
-  <div class="row mb-3">
+  <div id="autorizaEvaluacion" class="row mb-3" style="display: none">
     <label for="" class="col-sm-10 col-form-label align-self-center">En el caso de no ser postulante al PIE ¿Autoriza a una evaluación de un profesional idóneo (Psicologo, educadro diferencial, entre otros profesionales)?</label>
     <div class="col-sm-2 align-self-center">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieSi" value="">
-        <label class="form-check-label" for="postulantePieSi">Si</label>
+        <input class="form-check-input" type="radio" name="autorizaEvaluacion" id="autorizaEvaluacioneSi" value="" checked>
+        <label class="form-check-label" for="autorizaEvaluacioneSi">Si</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieNo" value="">
-        <label class="form-check-label" for="postulantePieNo">No</label>
+        <input class="form-check-input" type="radio" name="autorizaEvaluacion" id="autorizaEvaluacionNo" value="">
+        <label class="form-check-label" for="autorizaEvaluacionNo">No</label>
       </div>
     </div>
   </div>
@@ -135,12 +133,12 @@
     <label for="" class="col-sm-3 col-form-label align-self-center">¿El estudiante ha estado en tratamiento psicológico y/o psicopedagógico?</label>
     <div class="col-sm-3 align-self-center">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieSi" value="">
-        <label class="form-check-label" for="postulantePieSi">Si</label>
+        <input class="form-check-input" type="radio" name="tratamientoPsic" id="tratamientoPsicSi" value="" checked>
+        <label class="form-check-label" for="tratamientoPsicSi">Si</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieNo" value="">
-        <label class="form-check-label" for="postulantePieNo">No</label>
+        <input class="form-check-input" type="radio" name="tratamientoPsic" id="tratamientoPsicNo" value="">
+        <label class="form-check-label" for="tratamientoPsicNo">No</label>
       </div>
     </div>
     <div class="col-sm-4 align-self-center">
@@ -149,7 +147,7 @@
   </div>
   <div class="row mb-3">
     <label for="" class="col-sm-12 col-form-label align-self-center">Señalar si el estudiante padece alguna enfermedad o condición (Alergias, asma, cardiopatías, entre otras) con la cual en colegio deba tener un cuidado especial.</label>
-    <div class="col-sm-10 align-self-center">
+    <div class="col-sm-12 align-self-center">
       <input type="text" class="form-control" id="">
     </div>
   </div>
@@ -157,12 +155,12 @@
     <label for="" class="col-sm-3 col-form-label align-self-center">¿Está apto para las clases de educación física?</label>
     <div class="col-sm-3 align-self-center">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieSi" value="">
-        <label class="form-check-label" for="postulantePieSi">Si</label>
+        <input class="form-check-input" type="radio" name="aptoEducacionFisica" id="aptoEducacionFisicaSi" value="" checked>
+        <label class="form-check-label" for="aptoEducacionFisicaSi">Si</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="postulantePie" id="postulantePieNo" value="">
-        <label class="form-check-label" for="postulantePieNo">No</label>
+        <input class="form-check-input" type="radio" name="aptoEducacionFisica" id="aptoEducacionFisicaNo" value="">
+        <label class="form-check-label" for="aptoEducacionFisicaNo">No</label>
       </div>
     </div>
     <div class="col-sm-4 align-self-center">
@@ -173,11 +171,11 @@
     <label for="" class="col-sm-3 col-form-label align-self-center">En el caso de accidente, el estudiante debe ser derivado a: </label>
     <div class="col-sm-3 align-self-center">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="derivacionAccidente" id="derivacionHospital" value="">
+        <input class="form-check-input" type="radio" name="derivacionAccidente" id="derivacionHospital" value="" onclick="ocultarAvisoSeguro()" checked>
         <label class="form-check-label" for="derivacionHospital">Hospital</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="derivacionAccidente" id="derivacionOtro" value="">
+        <input class="form-check-input" type="radio" name="derivacionAccidente" id="derivacionOtro" onclick="mostrarAvisoSeguro()" value="">
         <label class="form-check-label" for="derivacionOtro">Otro</label>
       </div>
     </div>
@@ -185,7 +183,7 @@
       <input type="text" class="form-control" id="" placeholder="Indique cual">
     </div>
   </div>
-  <div class="alert alert-danger col-sm-12 align-self-center col-form-label" role="alert">
+  <div id="avisoSeguro" class="alert alert-danger col-sm-12 align-self-center col-form-label" role="alert" style="display: none">
     El seguro escolar solo cubre la atención en el hospital público, no en clinicas privadas.
   </div>
   <div class="row mb-3">
@@ -210,4 +208,25 @@
     <button class="btn btn-primary mb-3" type="submit">Enviar información</button>
   </div>
 </form>
+
+<script>
+  function mostrarAvisoSeguro() {
+    var avisoSeguro = document.getElementById("avisoSeguro");
+    avisoSeguro.style.display = "block";
+  }
+
+  function ocultarAvisoSeguro() {
+    var avisoSeguro = document.getElementById("avisoSeguro");
+    avisoSeguro.style.display = "none";
+  }
+  function mostrarAutorizaEvaluacion() {
+    var autorizaEvaluacion = document.getElementById("autorizaEvaluacion");
+    autorizaEvaluacion.style.display = "block";
+  }
+
+  function ocultarAutorizaEvaluacion() {
+    var autorizaEvaluacion = document.getElementById("autorizaEvaluacion");
+    autorizaEvaluacion.style.display = "none";
+  }
+</script>
 {% endblock %}
