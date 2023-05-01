@@ -64,16 +64,57 @@
             <input type="text" class="form-control" id="" placeholder="Indique cuál">
         </div>
     </div>
+    <hr>
     <div class="row mb-3">
-        <label for="" class="col-sm-3 col-form-label align-self-center">¿Viven en el mismo hogar?</label>
+        <label for="" class="col-sm-4 mb-3 col-form-label align-self-center">¿Vive en el mismo hogar que el estudiante?</label>
         <div class="col-sm-7 align-self-center">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="mismoHogar" id="mismoHogarSi" value="Si">
-                <label class="form-check-label" for="mismoHogarSi">Si</label>
+                <input class="form-check-input" type="radio" name="mismoHogarApd" id="mismoHogarApdSi" value="Si" onclick="ocultarDireccionApd()" checked>
+                <label class="form-check-label" for="mismoHogarApdSi">Si</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="mismoHogar" id="mismoHogarNo" value="No">
-                <label class="form-check-label" for="mismoHogarNo">No</label>
+                <input class="form-check-input" type="radio" name="mismoHogarApd" id="mismoHogarApdNo" value="No" onclick="mostrarDireccionApd()">
+                <label class="form-check-label" for="mismoHogarApdNo">No</label>
+            </div>
+        </div>
+        <div id="direccionApd" style="display:none;">
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label for="">Dirección</label>
+                    <input type="text" class="form-control" id="">
+                </div>
+                <div class="col-sm-2 mb-3">
+                    <label for="">Numero</label>
+                    <input type="text" class="form-control" id="">
+                </div>
+                <div class="col-sm-2 mb-3">
+                    <label for="">Departamento</label>
+                    <input type="text" class="form-control" id="">
+                </div>
+                <div class="col-sm-2 mb-3">
+                    <label for="">Block</label>
+                    <input type="text" class="form-control" id="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label for="">Región</label>
+                    <select class="form-select">
+                        <option selected>Elija una opción</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Ciudad</label>
+                    <select class="form-select">
+                        <option selected>Elija una opción</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Comuna</label>
+                    <select class="form-select">
+                        <option selected>Elija una opción</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -81,7 +122,7 @@
     <h1>Datos del suplente</h1>
     <div class="row">
         <div class="col-sm-6 mb-3">
-            <label for="">RUN Apoderado</label>
+            <label for="">RUN Apoderado Suplente</label>
             <input type="text" class="form-control" id="">
         </div>
     </div>
@@ -134,16 +175,57 @@
             <input type="text" class="form-control" id="" placeholder="Indique cuál">
         </div>
     </div>
+    <hr>
     <div class="row mb-3">
-        <label for="" class="col-sm-3 col-form-label align-self-center">¿Viven en el mismo hogar?</label>
+        <label for="" class="col-sm-4 col-form-label align-self-center">¿Vive en el mismo hogar que el estudiante?</label>
         <div class="col-sm-7 align-self-center">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="mismoHogar" id="mismoHogarSi" value="Si">
-                <label class="form-check-label" for="mismoHogarSi">Si</label>
+                <input class="form-check-input" type="radio" name="mismoHogarSup" id="mismoHogarSupSi" value="Si" onclick="ocultarDireccionSup()" checked>
+                <label class="form-check-label" for="mismoHogarSupSi">Si</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="mismoHogar" id="mismoHogarNo" value="No">
-                <label class="form-check-label" for="mismoHogarNo">No</label>
+                <input class="form-check-input" type="radio" name="mismoHogarSup" id="mismoHogarSupNo" value="No" onclick="mostrarDireccionSup()">
+                <label class="form-check-label" for="mismoHogarSupNo">No</label>
+            </div>
+        </div>
+    </div>
+    <div id="direccionSup" style="display:none;">
+        <div class="row">
+            <div class="col-sm-6 mb-3">
+                <label for="">Dirección</label>
+                <input type="text" class="form-control" id="">
+            </div>
+            <div class="col-sm-2 mb-3">
+                <label for="">Numero</label>
+                <input type="text" class="form-control" id="">
+            </div>
+            <div class="col-sm-2 mb-3">
+                <label for="">Departamento</label>
+                <input type="text" class="form-control" id="">
+            </div>
+            <div class="col-sm-2 mb-3">
+                <label for="">Block</label>
+                <input type="text" class="form-control" id="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 mb-3">
+                <label for="">Región</label>
+                <select class="form-select">
+                    <option selected>Elija una opción</option>
+                </select>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="">Ciudad</label>
+                <select class="form-select">
+                    <option selected>Elija una opción</option>
+                </select>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="">Comuna</label>
+                <select class="form-select">
+                    <option selected>Elija una opción</option>
+                </select>
             </div>
         </div>
     </div>
@@ -154,4 +236,27 @@
         <button class="btn btn-primary mb-3" type="submit">Enviar información</button>
     </div>
 </form>
+
+<script>
+    function mostrarDireccionSup() {
+        var direccionSup = document.getElementById("direccionSup");
+        direccionSup.style.display = "block";
+    }
+
+    // Función para ocultar el div
+    function ocultarDireccionSup() {
+        var direccionSup = document.getElementById("direccionSup");
+        direccionSup.style.display = "none";
+    }
+    function mostrarDireccionApd() {
+        var direccionApd = document.getElementById("direccionApd");
+        direccionApd.style.display = "block";
+    }
+
+    // Función para ocultar el div
+    function ocultarDireccionApd() {
+        var direccionApd = document.getElementById("direccionApd");
+        direccionApd.style.display = "none";
+    }
+</script>
 {% endblock %}
