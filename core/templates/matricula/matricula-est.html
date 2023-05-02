@@ -3,47 +3,48 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/matriculas.css' %}">
+<link rel="stylesheet" href="{% static 'css/toast-controller.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<form action="" class="mt-3">
+<form class="mt-3" id="matricula">
     <h1>Datos del Estudiante</h1>
     <div class="row">
         <div class="col-sm-6 mb-3">
             <label for="">RUN Estudiante</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="run" required>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-4 mb-3">
             <label for="">Nombres</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="nombres" required>
         </div>
         <div class="col-sm-4 mb-3">
             <label for="">Apellido Paterno</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="app_paterno" required>
         </div>
         <div class="col-sm-4 mb-3">
             <label for="">Apellido Materno</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="app_materno" required>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6 mb-3">
             <label for="">Nacionalidad</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="nacionalidad" required>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-4 mb-3">
             <label for="">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="">
+            <input type="date" class="form-control" name="fecha_nac" required>
         </div>
         <div class="col-sm-4 mb-3">
             <label for="">Sexo</label>
-            <select class="form-select">
-                <option selected>Elija una opción</option>
+            <select class="form-select" name="genero" required>
+                <option value="" selected>Elija una opción</option>
                 <option value="1">Masculino</option>
                 <option value="2">Femenino</option>
                 <option value="3">Prefiero no responder</option>
@@ -51,8 +52,8 @@
         </div>
         <div class="col-sm-4 mb-3">
             <label for="">Curso</label>
-            <select class="form-select">
-                <option selected>Elija un curso</option>
+            <select class="form-select" name="curso" required>
+                <option value="" selected>Elija un curso</option>
                 <optgroup label="Enseñanza Básica">
                     <option value="1">1° Básico</option>
                     <option value="2">2° Básico</option>
@@ -76,49 +77,65 @@
     <div class="row">
         <div class="col-sm-6 mb-3">
             <label for="">Dirección</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="direccion" required>
         </div>
         <div class="col-sm-2 mb-3">
             <label for="">Numero</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="numero" required>
         </div>
         <div class="col-sm-2 mb-3">
             <label for="">Departamento</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="depto">
         </div>
         <div class="col-sm-2 mb-3">
             <label for="">Block</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="block">
         </div>
     </div>
     <div class="row">
         <div class="col-sm-4 mb-3">
             <label for="">Región</label>
-            <select class="form-select">
-                <option selected>Elija una opción</option>
-            </select>
-        </div>
-        <div class="col-sm-4 mb-3">
-            <label for="">Ciudad</label>
-            <select class="form-select">
-                <option selected>Elija una opción</option>
+            <select class="form-select" name="region" required>
+                <option value="" selected>Elija una opción</option>
+                <option value="Metropolitana de Santiago">Metropolitana de Santiago</option>
+                <option value="Antofagasta">Antofagasta</option>
+                <option value="Valparaíso">Valparaíso</option>
+                <option value="Araucanía">Araucanía</option>
+                <option value="Los Lagos">Los Lagos</option>
+                <option value="O'Higgins">O'Higgins</option>
+                <option value="Coquimbo">Coquimbo</option>
+                <option value="Biobío">Biobío</option>
+                <option value="Arica y Parinacota">Arica y Parinacota</option>
+                <option value="Maule">Maule</option>
+                <option value="Tarapacá">Tarapacá</option>
+                <option value="Ñuble">Ñuble</option>
+                <option value="Los Ríos">Los Ríos</option>
+                <option value="Atacama">Atacama</option>
+                <option value="Magallanes y de la Antártica Chilena">Magallanes y de la Antártica Chilena</option>
+                <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos Ibáñez del Campo</option>
             </select>
         </div>
         <div class="col-sm-4 mb-3">
             <label for="">Comuna</label>
-            <select class="form-select">
-                <option selected>Elija una opción</option>
+            <select class="form-select" name="comuna" required>
+                <option value="" selected>Elija una opción</option>
             </select>
         </div>
+        <!-- <div class="col-sm-4 mb-3">
+            <label for="">Ciudad</label>
+            <select class="form-select" required>
+                <option selected>Elija una opción</option>
+            </select>
+        </div> -->
     </div>
     <div class="row">
         <div class="col-sm-4 mb-3">
             <label for="">Teléfono Domicilio</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="telefono_fijo" required>
         </div>
         <div class="col-sm-4 mb-3">
             <label for="">Celular de Emergencias</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" name="celular" required>
         </div>
     </div>
     <hr>
@@ -128,4 +145,12 @@
         <button class="btn btn-primary mb-3" type="submit">Enviar información</button>
     </div>
 </form>
+
+<div class="toast-message">
+    This is a message
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'scripts/matricula-est.js' %}"></script>
 {% endblock %}
