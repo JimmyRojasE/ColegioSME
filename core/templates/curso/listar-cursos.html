@@ -27,7 +27,7 @@
                     <tr>
                         <th>Código</th>
                         <th>Nombre</th>
-                        <th>Jornada</th>
+                       
                         <th>Año</th>
                         <th>Cantidad de Mátricula</th>
                         <th>Editar</th>
@@ -38,25 +38,23 @@
                     {% for c in Cursos%}
                     <tr>
                         <td>
-                            {{c.id}}
+                            {{c.id_curso}}
                         </td>
                         <td>
-                            {{c.nombreCurso}}
+                            {{c.nombre_curso}}
+                        </td>
+                        
+                        <td>
+                            {{c.año}}
                         </td>
                         <td>
-                            {{c.idJornada}}
+                            {{c.cantidad_matricula}}
                         </td>
                         <td>
-                            {{c.anio}}
+                            <a href="{%url 'editarCurso' c.id_curso%}"class="btn btn-warning">Editar Curso</a>
                         </td>
                         <td>
-                            {{c.cantMatricula}}
-                        </td>
-                        <td>
-                            <a href="{%url 'editarCurso' c.id%}"class="btn btn-warning">Editar Curso</a>
-                        </td>
-                        <td>
-                            <a href="{%url 'eliminarCurso' c.id%}" class="btn btn-danger">Eliminar Curso</a>
+                            <a href="{%url 'eliminarCurso' c.id_curso%}" class="btn btn-danger">Eliminar Curso</a>
                         </td>
                     </tr>
             

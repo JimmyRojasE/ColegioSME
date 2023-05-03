@@ -12,6 +12,6 @@ urlpatterns = [
     path('login', login),
     path('listar-curso/', listarCurso, name="listarCurso"),
     path('eliminar-curso/<id>', eliminarCurso, name="eliminarCurso"),
-    path('editar-curso/<id>/', editarCurso, name="editarCurso"),
+    path('editar-curso/<id>', editarCurso, name="editarCurso"),
     path('crear-curso/', crearCurso, name="crearCurso"),
 ]

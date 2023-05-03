@@ -54,7 +54,7 @@ def crearCurso(request):
 
 def editarCurso(request,id):
 
-    curso=get_object_or_404(Curso,id=id)
+    curso=get_object_or_404(Curso,id_curso=id)
     data={
         'form': CursoForm(instance=curso)
     }
@@ -68,7 +68,7 @@ def editarCurso(request,id):
     return render(request,'curso/editar-curso.html',data)
 
 def eliminarCurso(request,id):
-    curso=get_object_or_404(Curso,id=id)
+    curso=get_object_or_404(Curso,id_curso=id)
     curso.delete()
     return redirect(to="listarCurso")
 
