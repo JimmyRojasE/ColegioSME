@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import inicio, matriculasEst, matriculasApd, login,matriculasMdr,matriculasPdr,matriculasInfoest,crearCurso, crearProfesor,listarCurso,editarCurso,eliminarCurso
+from .views import inicio, matriculasEst, matriculasApd, login,matriculasMdr,matriculasPdr,matriculasInfoest,crearCurso, crearProfesor,listarCurso,editarCurso,eliminarCurso,listarColegio,editarColegio,eliminarColegio,crearColegio,listarGrupoFamiliar,crearGrupoFamiliar,eliminarGrupoFamiliar,editarGrupoFamiliar
 urlpatterns = [
     path('', inicio),
     path('matricula-est', matriculasEst),
@@ -14,4 +14,12 @@ urlpatterns = [
     path('eliminar-curso/<id>', eliminarCurso, name="eliminarCurso"),
     path('editar-curso/<id>', editarCurso, name="editarCurso"),
     path('crear-curso/', crearCurso, name="crearCurso"),
+    path('listar-colegio/', listarColegio, name="listarColegio"),
+    path('eliminar-colegio/<id>', eliminarColegio, name="eliminarColegio"),
+    path('editar-colegio/<id>', editarColegio, name="editarColegio"),
+    path('crear-colegio/', crearColegio, name="crearColegio"),
+    path('listar-grupoFamiliar/', listarGrupoFamiliar, name="listarGrupoFamiliar"),
+    path('eliminar-grupoFamiliar/<id>', eliminarGrupoFamiliar, name="eliminarGrupoFamiliar"),
+    path('editar-grupoFamiliar/<id>', editarGrupoFamiliar, name="editarGrupoFamiliar"),
+    path('crear-grupoFamiliar/', crearGrupoFamiliar, name="crearGrupoFamiliar"),
 ]
