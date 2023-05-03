@@ -1,0 +1,69 @@
+{% extends 'baseUsuarios.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock %}
+{% block content %}
+
+
+<div class="row mt-3">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+        <h1 >Administración Cursos</h1>
+    </div>
+    
+</div>
+<div class="row mt-3">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+        <a href="{%url 'crearCurso'%}"class="btn btn-primary">Crear Curso</a>
+    </div>
+    
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="table table-striped table-hover table-resposive-sm">
+            <table class="table table-dark table-sm table-striped ">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Jornada</th>
+                        <th>Año</th>
+                        <th>Cantidad de Mátricula</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in Cursos%}
+                    <tr>
+                        <td>
+                            {{c.id}}
+                        </td>
+                        <td>
+                            {{c.nombreCurso}}
+                        </td>
+                        <td>
+                            {{c.idJornada}}
+                        </td>
+                        <td>
+                            {{c.anio}}
+                        </td>
+                        <td>
+                            {{c.cantMatricula}}
+                        </td>
+                        <td>
+                            <a href="{%url 'editarCurso' c.id%}"class="btn btn-warning">Editar Curso</a>
+                        </td>
+                        <td>
+                            <a href="{%url 'eliminarCurso' c.id%}" class="btn btn-danger">Eliminar Curso</a>
+                        </td>
+                    </tr>
+            
+                    {%endfor%}  
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{%endblock%}

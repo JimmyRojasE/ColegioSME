@@ -13,7 +13,7 @@
         <div class="card text-center text-bg-dark " style="width: 18rem;" >
             <div class="card-body ">
                 <div class="card-title">
-                    <h2>Crear Curso</h2>
+                    <h2>Editar Curso</h2>
                 </div>
                 <hr>
                 <form action="" class="" id="formulario_contacto" method="POST"> 
@@ -21,13 +21,12 @@
         
                     {{ form | crispy }}
                     <br>
-                    
                     <hr>
                     <div class="d-flex justify-content-center">
 
                         <a href="{%url 'listarCurso'%}"class="btn btn-warning">Cancelar</a>
                         &nbsp;
-                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
                 

@@ -37,8 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
+    'core',
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "phonenumber_field",
 ]
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK= 'bootstrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,9 +81,13 @@ WSGI_APPLICATION = 'ColegioSME.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'csme',
+            'USER': 'root',
+            'PASSWORD': 'rootroot',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
 }
 
 
@@ -104,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-cl'
 
 TIME_ZONE = 'UTC'
 
@@ -122,7 +131,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+PHONENUMBER_DB_FORMAT='NATIONAL'
+PHONENUMBER_DEFAULT_REGION='CL'
 ALLOWED_HOSTS = [
     '190.161.35.216',
     '127.0.0.1'
