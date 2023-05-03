@@ -8,13 +8,13 @@
 
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-        <h1 >Administración Colegio</h1>
+        <h1 >Administración Grupo Familiar</h1>
     </div>
     
 </div>
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-        <a href="{%url 'crearColegio'%}"class="btn btn-primary">Crear Colegio</a>
+        <a href="{%url 'crearGrupoFamiliar'%}"class="btn btn-primary">Crear Grupo Familiar</a>
     </div>
     
 </div>
@@ -25,35 +25,36 @@
             <table class="table table-dark table-sm table-striped ">
                 <thead>
                     <tr>
-                        <th>id_colegio</th>
-                        <th>nombre_colegio</th>
-                        <th>representante_legal</th>
-                        <th>telefono</th>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                       
+                        <th>edad</th>
+                        <th>Parentesco</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for c in Colegio%}
+                    {% for gf in grupoFamiliar%}
                     <tr>
                         <td>
-                            {{c.id_colegio}}
+                            {{gf.id_gr_fam}}
                         </td>
                         <td>
-                            {{c.nombre_colegio}}
+                            {{gf.nombre}}
                         </td>
                         
                         <td>
-                            {{c.representante_legal}}
+                            {{gf.edad}}
                         </td>
                         <td>
-                            {{c.telefono}}
+                            {{gf.parentesco}}
                         </td>
                         <td>
-                            <a href="{%url 'editarColegio' c.id_colegio%}"class="btn btn-warning">Editar Colegio</a>
+                            <a href="{%url 'editarGrupoFamiliar' gf.id_gr_fam%}"class="btn btn-warning">Editar Grupo Familiar</a>
                         </td>
                         <td>
-                            <a href="{%url 'eliminarColegio' c.id_colegio%}" class="btn btn-danger">Eliminar Colegio</a>
+                            <a href="{%url 'eliminarGrupoFamiliar' gf.id_gr_fam%}" class="btn btn-danger">Eliminar Grupo Familiar</a>
                         </td>
                     </tr>
             
