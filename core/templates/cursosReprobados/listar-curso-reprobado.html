@@ -14,7 +14,7 @@
 </div>
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-        <a href="{%url 'crearCurso'%}"class="btn btn-primary">Crear Curso</a>
+        <a href="{%url 'crearCursoReprobado'%}"class="btn btn-primary">Crear Curso</a>
     </div>
     
 </div>
@@ -26,33 +26,34 @@
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Nombre Curso Repetido</th>
-                        <th>Año Curso Repetido</th>
+                        <th>Nombre Curso Reprobado</th>
+                        <th>Año Curso Reprobado</th>
+                        <th>id Matricula</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for c in Cursos%}
+                    {% for c in CursosR%}
                     <tr>
                         <td>
-                            {{c.id_curso}}
+                            {{c.id_curso_repetido}}
                         </td>
                         <td>
-                            {{c.nombre_curso}}
+                            {{c.nombre_curso_repetido}}
                         </td>
                         
                         <td>
-                            {{c.año}}
+                            {{c.anno_repitencia}}
                         </td>
                         <td>
-                            {{c.cantidad_matricula}}
+                            {{c.id_matricula}}
                         </td>
                         <td>
-                            <a href="{%url 'editarCurso' c.id_curso%}"class="btn btn-warning">Editar Curso</a>
+                            <a href="{%url 'editarCursoReprobado' c.id_curso_repetido%}"class="btn btn-warning">Editar Curso Reprobado</a>
                         </td>
                         <td>
-                            <a href="{%url 'eliminarCurso' c.id_curso%}" class="btn btn-danger">Eliminar Curso</a>
+                            <a href="{%url 'eliminarCursoReprobado' c.id_curso_repetido%}" class="btn btn-danger">Eliminar Curso Reprobado</a>
                         </td>
                     </tr>
             

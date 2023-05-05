@@ -239,12 +239,19 @@ class Curso(models.Model):
         managed = False
         db_table = 'curso'
 
+class listaCursos(models.Model):
+    id_lista_curso=models.IntegerField(primary_key=True,verbose_name="Id Lista Curso")
+    nombre_curso=models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre_curso
 
 class CursoRepetido(models.Model):
-    id_curso_repetido = models.AutoField(primary_key=True)
-    nombre_curso_repetido = models.CharField(max_length=50)
-    anno_repitencia = models.IntegerField()
-    id_matricula = models.ForeignKey('Matricula', models.DO_NOTHING, db_column='id_matricula')
+    id_curso_repetido = models.AutoField(primary_key=True, verbose_name='Id')
+    id_lista_curso=models.ForeignKey(listaCursos, on_delete=models.PROTECT, verbose_name='Nombre Curso')
+    nombre_curso_repetido = models.CharField(max_length=50, verbose_name='Curso Reprobado')
+    anno_repitencia = models.IntegerField(verbose_name='Año de Repitencia')
+    id_matricula = models.ForeignKey('Matricula', models.DO_NOTHING, db_column='id_matricula', verbose_name='Id Matricula')
 
     class Meta:
         managed = False

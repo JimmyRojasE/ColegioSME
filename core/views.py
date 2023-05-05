@@ -171,7 +171,7 @@ def editarUsuario(request):
 def eliminarUsuario(request, id):
     return redirect(to="listarUsuario")
 
-def crearCursoRepetido(request):
+def crearCursoReprobado(request):
     data={
     'form':CursoRepetidoForm()
     }
@@ -183,9 +183,9 @@ def crearCursoRepetido(request):
        else:
            data["form"]=formulario
 
-    return render(request,'curso/crear-curso-repetido.html',data)
+    return render(request,'cursosReprobados/crear-curso-reprobado.html',data)
 
-def editarCursoRepetido(request,id):
+def editarCursoReprobado(request,id):
 
     curso=get_object_or_404(CursoRepetido,id_curso=id)
     data={
@@ -198,17 +198,17 @@ def editarCursoRepetido(request,id):
             return redirect(to="listarCursoRepetido")
         data['form']=formulario
 
-    return render(request,'curso/editar-curso-repetido.html',data)
+    return render(request,'cursosReprobados/editar-curso-reprobado.html',data)
 
-def eliminarCursoRepetido(request,id):
+def eliminarCursoReprobado(request,id):
     curso=get_object_or_404(CursoRepetido,id_curso=id)
     curso.delete()
     return redirect(to="listarCursoRepetido")
 
-def listarCursoRepetido(request):
+def listarCursoReprobado(request):
     cursosRepetidos=CursoRepetido.objects.all()
     data={
         'CursosR':cursosRepetidos
     }
 
-    return render(request,'colegio/listar-cursos-repetidos.html',data)
+    return render(request,'cursosReprobados/listar-curso-reprobado.html',data)
