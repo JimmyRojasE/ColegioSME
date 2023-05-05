@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'ColegioSME.wsgi.application'
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'csme',
-            'USER': 'root',
-            'PASSWORD': 'rootroot',
-            'HOST': 'localhost',
+            'NAME': 'colegiosme',
+            'USER': 'csme2023',
+            'PASSWORD': 'Colegiosme2023',
+            'HOST': 'db4free.net',
             'PORT': '3306',
         }
 }

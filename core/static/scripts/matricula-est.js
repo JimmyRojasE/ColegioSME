@@ -7,6 +7,9 @@ const comuna = document.querySelector('select[name=comuna]');
 const toast = document.querySelector('.toast-message');
 toast.style.display = 'none';
 
+let form_type = 'Create';
+let info = {};
+
 const comunas = {
     'Metropolitana de Santiago': [
         { id: 1, name: 'Puente Alto' },
@@ -389,8 +392,36 @@ const comunas = {
 }
 
 run.addEventListener('blur', (ev) => {
-    const value = run.value;
-    run.value = formatRut(value);
+    const formatted = formatRut(run.value)
+    run.value = formatted;
+
+    const searched = formatted.split('-').slice(0, 1)[0].split('.').join('');
+    const dv = formatted.split('-')[1];
+
+    toast.style.display = 'block';
+    toast.innerHTML = 'Buscando informacion del rut ingresado...';
+
+    fetch(`http://190.161.35.216:3000/cl/csme/matriculas/api/obtener_alumno/${searched}/${dv}`)
+        .then(data => data.json())
+        .then(response => {
+            if (response.length > 0) {
+                toast.innerHTML = 'Informacion encontrada.';
+
+                form_type = 'Modify';
+                info = response[0];
+                
+            } else {
+                toast.innerHTML = 'No se encontro informacion.';
+                form_type = 'Create';
+            }
+
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 6000)
+        })
+        .catch(err => {
+            console.log({ err });
+        });
 });
 region.addEventListener('change', (ev) => {
     if (region.value === '') {
@@ -434,43 +465,53 @@ form.addEventListener('submit', async (ev) => {
     toast.style.display = 'block';
     toast.innerHTML = 'Guardando informacion, por favor espere...';
 
-    fetch('http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_alumno', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.ok) {
-            toast.innerHTML = 'Informacion guardada con exito, redirigiendo...';
+    if (form_type == 'Create') {
+        fetch('http://190.161.35.216:3000/cl/csme/matriculas/api/matricula_alumno', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(data => data.json())
+            .then(response => {
+                if (response.ok) {
+                    const matricula_id = response.data.matricula.insertId;
+                    toast.innerHTML = 'Informacion guardada con exito, redirigiendo...';
 
-            setTimeout(() => {
-                location.href = '/matricula-infoest';
-                toast.style.display = 'none';
-            }, 6000)
-        } else {
-            toast.innerHTML = 'Se encontro un error, revise la informacion e ingrese nuevamente.';
+                    localStorage.setItem('id_matricula', matricula_id);
 
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 4000)
-        }
-    })
-    .catch(err => {
-        toast.innerHTML = 'Hubo un error interno, intente nuevamente...';
-        button.disabled = false;
+                    setTimeout(() => {
+                        location.href = '/matricula-infoest';
+                        toast.style.display = 'none';
+                    }, 6000)
+                } else {
+                    toast.innerHTML = 'Se encontro un error, revise la informacion e ingrese nuevamente.';
 
-        setTimeout(() => {
-            toast.style.display = 'none';
-        }, 4000)
-    });
+                    setTimeout(() => {
+                        toast.style.display = 'none';
+                    }, 4000)
+                }
+            })
+            .catch(err => {
+                toast.innerHTML = 'Hubo un error interno, intente nuevamente...';
+                button.disabled = false;
+
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 4000)
+            });
+    } else if (form_type == 'Modify') {
+        fetch('')
+            .then()
+            .then()
+            .catch();
+    }
 });
 
 function formatRut(rut) {
     rut = rut.toString();
-    var sRut = (rut + '').replace(/\D/g, '');
+    var sRut = (rut + '').replace(/[^\dkK]/g, '');
     var sRutDV = sRut.slice(-1);
     sRut = sRut.slice(0, -1);
     var sFormatted = '';
@@ -482,3 +523,15 @@ function formatRut(rut) {
     sFormatted += '-' + sRutDV;
     return sFormatted;
 }
+
+const splitKeyValue = obj => {
+    const keys = Object.keys(obj);
+    const res = [];
+    for (let i = 0; i < keys.length; i++) {
+        res.push({
+            'key': keys[i],
+            'value': obj[keys[i]]
+        });
+    };
+    return res;
+};

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Curso,Colegio,Direccion,GrupoFamiliar
-from .forms import CursoForm,ColegioForm, DireccionForm,GrupoFamiliarForm
+from .models import Curso,Colegio,Direccion,GrupoFamiliar,Persona,CursoRepetido
+from .forms import CursoForm,ColegioForm, DireccionForm,GrupoFamiliarForm,CursoRepetidoForm
 
 # Create your views here.
 def inicio(request):
@@ -9,8 +9,8 @@ def inicio(request):
 def matriculasEst(request):
     return render(request, 'matricula/matricula-est.html')
 
-def matriculasApd(request):
-    return render(request, 'matricula/matricula-apd.html')
+def matriculasInfoest(request):
+    return render(request, 'matricula/matricula-infoest.html')
 
 def matriculasMdr(request):
     return render(request, 'matricula/matricula-mdr.html')
@@ -18,17 +18,14 @@ def matriculasMdr(request):
 def matriculasPdr(request):
     return render(request, 'matricula/matricula-pdr.html')
 
-def matriculasInfoest(request):
-    return render(request, 'matricula/matricula-infoest.html')
+def matriculasApd(request):
+    return render(request, 'matricula/matricula-apd.html')
 
 def login(request):
     return render(request, 'auth/login.html')
 
-
-    
 def crearProfesor(request):
     return render(request, 'profesor/crear-profesor.html')
-
 
 def listarCurso(request):
     cursos=Curso.objects.all()
@@ -158,3 +155,60 @@ def eliminarGrupoFamiliar(request,id):
     curso.delete()
     return redirect(to="listarGrupoFamiliar")
 
+def crearUsuario(request):
+    return render(request,'usuarios/crear-usuario.html')
+
+def listarUsuario(request):
+    personas=Persona.objects.all()
+    data={
+        'Personas':personas
+    }
+    return render(request,'usuarios/listar-usuario.html',data)
+
+def editarUsuario(request):
+    return render(request,'usuarios/editar-usuario.html')
+
+def eliminarUsuario(request, id):
+    return redirect(to="listarUsuario")
+
+def crearCursoRepetido(request):
+    data={
+    'form':CursoRepetidoForm()
+    }
+    if request.method=='POST':
+       formulario=CursoRepetidoForm(data=request.POST)
+       if formulario.is_valid():
+           formulario.save()
+           return redirect(to="listarCursoRepetido")
+       else:
+           data["form"]=formulario
+
+    return render(request,'curso/crear-curso-repetido.html',data)
+
+def editarCursoRepetido(request,id):
+
+    curso=get_object_or_404(CursoRepetido,id_curso=id)
+    data={
+        'form': CursoRepetidoForm(instance=curso)
+    }
+    if request.method=='POST':
+        formulario=CursoRepetidoForm(data=request.POST,instance=curso)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listarCursoRepetido")
+        data['form']=formulario
+
+    return render(request,'curso/editar-curso-repetido.html',data)
+
+def eliminarCursoRepetido(request,id):
+    curso=get_object_or_404(CursoRepetido,id_curso=id)
+    curso.delete()
+    return redirect(to="listarCursoRepetido")
+
+def listarCursoRepetido(request):
+    cursosRepetidos=CursoRepetido.objects.all()
+    data={
+        'CursosR':cursosRepetidos
+    }
+
+    return render(request,'colegio/listar-cursos-repetidos.html',data)

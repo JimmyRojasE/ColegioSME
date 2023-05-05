@@ -1,5 +1,5 @@
 from django import forms
-from .models import Curso,Colegio, Direccion, GrupoFamiliar
+from .models import Curso,Colegio, Direccion, GrupoFamiliar, CursoRepetido
 
 
 class CursoForm(forms.ModelForm):
@@ -16,7 +16,13 @@ class DireccionForm(forms.ModelForm):
     class Meta:
         model=Direccion
         fields= '__all__'
+
 class GrupoFamiliarForm(forms.ModelForm):
     class Meta:
         model=GrupoFamiliar
         fields=('id_gr_fam','nombre','edad','parentesco')       
+
+class CursoRepetidoForm(forms.ModelForm):
+    class Meta:
+        model=CursoRepetido
+        fields=('__all__')    
