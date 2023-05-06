@@ -3,6 +3,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/matriculas.css' %}">
+<link rel="stylesheet" href="{% static 'css/toast-controller.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -190,6 +191,10 @@
 		<button class="btn btn-primary mb-3" type="submit">Enviar información</button>
 	</div>
 </form>
+
+<div class="toast-message">
+    This is a message
+</div>
 {% endblock %}
 
 {% block script %}

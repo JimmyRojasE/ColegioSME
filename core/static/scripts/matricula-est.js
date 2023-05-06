@@ -401,7 +401,7 @@ run.addEventListener('blur', (ev) => {
     toast.style.display = 'block';
     toast.innerHTML = 'Buscando informacion del rut ingresado...';
 
-    fetch(`http://190.161.35.216:3000/cl/csme/matriculas/api/obtener_alumno/${searched}/${dv}`)
+    fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/obtener_alumno/${searched}/${dv}`)
         .then(data => data.json())
         .then(response => {
             if (response.length > 0) {
@@ -466,7 +466,7 @@ form.addEventListener('submit', async (ev) => {
     toast.innerHTML = 'Guardando informacion, por favor espere...';
 
     if (form_type == 'Create') {
-        fetch('http://190.161.35.216:3000/cl/csme/matriculas/api/matricula_alumno', {
+        fetch('http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_alumno', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -476,13 +476,11 @@ form.addEventListener('submit', async (ev) => {
             .then(data => data.json())
             .then(response => {
                 if (response.ok) {
-                    const matricula_id = response.data.matricula.insertId;
+                    const id_matricula = response.data.matricula.insertId;
                     toast.innerHTML = 'Informacion guardada con exito, redirigiendo...';
 
-                    localStorage.setItem('id_matricula', matricula_id);
-
                     setTimeout(() => {
-                        location.href = '/matricula-infoest';
+                        location.href = `/matricula-infoest?id=${id_matricula}`;
                         toast.style.display = 'none';
                     }, 6000)
                 } else {

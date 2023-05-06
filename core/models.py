@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+import uuid
 
 
 class Administrador(models.Model):
@@ -240,21 +241,20 @@ class Curso(models.Model):
         db_table = 'curso'
 
 class listaCursos(models.Model):
-    id_lista_curso=models.IntegerField(primary_key=True,verbose_name="Id Lista Curso")
-    nombre_curso=models.CharField(max_length=50)
+    id_lista_curso = models.IntegerField(primary_key=True,verbose_name="Id Lista Curso")
+    nombre_curso = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.nombre_curso
+        return self.id_lista_curso
 
 class CursoRepetido(models.Model):
     id_curso_repetido = models.AutoField(primary_key=True, verbose_name='Id')
-    id_lista_curso=models.ForeignKey(listaCursos, on_delete=models.PROTECT, verbose_name='Nombre Curso')
-    nombre_curso_repetido = models.CharField(max_length=50, verbose_name='Curso Reprobado')
+    id_lista_curso = models.ForeignKey(listaCursos, on_delete=models.PROTECT,verbose_name='Nombre Curso')
     anno_repitencia = models.IntegerField(verbose_name='Año de Repitencia')
     id_matricula = models.ForeignKey('Matricula', models.DO_NOTHING, db_column='id_matricula', verbose_name='Id Matricula')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'curso_repetido'
 
 
@@ -372,10 +372,13 @@ class Matricula(models.Model):
     ultimo_curso_aprobado = models.CharField(max_length=50)
     anno_curso_aprobado = models.IntegerField()
     razon_cambio_colegio = models.CharField(max_length=100, blank=True, null=True)
-
+    
+    def __str__(self):
+        return self.curso_matricula
     class Meta:
         managed = False
         db_table = 'matricula'
+    
 
 
 class Pago(models.Model):

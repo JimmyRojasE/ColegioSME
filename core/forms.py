@@ -25,4 +25,4 @@ class GrupoFamiliarForm(forms.ModelForm):
 class CursoRepetidoForm(forms.ModelForm):
     class Meta:
         model=CursoRepetido
-        fields=('__all__')    
+        fields=('id_curso_repetido','id_lista_curso','anno_repitencia','id_matricula')    

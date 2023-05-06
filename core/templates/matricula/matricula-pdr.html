@@ -11,324 +11,359 @@
     <div class="form-check">
         <input class="form-check-input" type="checkbox" id="chboxOcultarDatosPadre" onchange="ocultarDatosPadre()">Prefiero no declarar</input>
     </div>
-    <div id="datosPadre">
-        <hr>
-        <!-- RUN -->
-        <div class="row">
-            <div class="col-sm-6 mb-3">
-                <label for="">RUN Padre</label>
-                <input type="text" class="form-control" id="">
+    <fieldset id="datosPadre">
+        <div>
+            <hr>
+            <!-- RUN -->
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label for="">RUN Padre</label>
+                    <input type="text" class="form-control" name="rut">
+                </div>
+            </div>
+            <!-- NOMBRE -->
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label for="">Nombres</label>
+                    <input type="text" class="form-control" name="nombres">
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Apellido Paterno</label>
+                    <input type="text" class="form-control" name="app_paterno">
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Apellido Materno</label>
+                    <input type="text" class="form-control" name="app_materno">
+                </div>
+            </div>
+            <!-- INFORMACIÓN PERSONAL -->
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label for="">Nacionalidad</label>
+                    <input type="text" class="form-control" name="nacionalidad">
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" name="fecha_nac">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label for="">Genero</label>
+                    <select class="form-select" name="id_genero">
+                        <option value="" selected>Elija una opción</option>
+                        <option value="1">Masculino</option>
+                        <option value="2">Femenino</option>
+                        <option value="3">Prefiero no responder</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Nivel de Estudio</label>
+                    <select class="form-select" name="nivel_academico">
+                        <option selected>Elija un Nivel de Estudio</option>
+                        <optgroup label="Enseñanza Básica">
+                            <option value="1">Básica Incompleta</option>
+                            <option value="2">Básica Completa</option>
+                        </optgroup>
+                        <optgroup label="Enseñanza Media">
+                            <option value="3">Media Imcompleta</option>
+                            <option value="4">Media Completa</option>
+                        </optgroup>
+                        <optgroup label="Superior Técnico">
+                            <option value="5">Técnico Incompleta</option>
+                            <option value="6">Técnico Completa</option>
+                        </optgroup>
+                        <optgroup label="Superior Universitaria">
+                            <option value="7">Universitario Incompletos</option>
+                            <option value="8">Universitario Completos</option>
+                        </optgroup>
+                        <optgroup label="Postgrado">
+                            <option value="9">Postgrado</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <!-- DIRECCION -->
+            <div class="row mb-3">
+                <label for="" class="col-sm-4 mb-3 col-form-label align-self-center">¿Vive en el mismo hogar que el estudiante?</label>
+                <div class="col-sm-7 align-self-center">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="vive_con_alumno" id="mismoHogarPdrSi" value="Si" onclick="ocultarDireccionPdr()">
+                        <label class="form-check-label" for="">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="vive_con_alumno" id="mismoHogarPdrNo" value="No" onclick="mostrarDireccionPdr()">
+                        <label class="form-check-label" for="">No</label>
+                    </div>
+                </div>
+                <div id="direccionPdr" style="display:none;">
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label for="">Dirección</label>
+                            <input type="text" class="form-control" name="direccion">
+                        </div>
+                        <div class="col-sm-2 mb-3">
+                            <label for="">Numero</label>
+                            <input type="text" class="form-control" name="numero">
+                        </div>
+                        <div class="col-sm-2 mb-3">
+                            <label for="">Departamento</label>
+                            <input type="text" class="form-control" name="depto" value="">
+                        </div>
+                        <div class="col-sm-2 mb-3">
+                            <label for="">Block</label>
+                            <input type="text" class="form-control" name="block" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <label for="">Región</label>
+                            <select class="form-select" name="region">
+                                <option value="" selected>Elija una opción</option>
+                                <option value="Metropolitana de Santiago">Metropolitana de Santiago</option>
+                                <option value="Antofagasta">Antofagasta</option>
+                                <option value="Valparaíso">Valparaíso</option>
+                                <option value="Araucanía">Araucanía</option>
+                                <option value="Los Lagos">Los Lagos</option>
+                                <option value="O'Higgins">O'Higgins</option>
+                                <option value="Coquimbo">Coquimbo</option>
+                                <option value="Biobío">Biobío</option>
+                                <option value="Arica y Parinacota">Arica y Parinacota</option>
+                                <option value="Maule">Maule</option>
+                                <option value="Tarapacá">Tarapacá</option>
+                                <option value="Ñuble">Ñuble</option>
+                                <option value="Los Ríos">Los Ríos</option>
+                                <option value="Atacama">Atacama</option>
+                                <option value="Magallanes y de la Antártica Chilena">Magallanes y de la Antártica Chilena</option>
+                                <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos Ibáñez del Campo</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            <label for="">Comuna</label>
+                            <select class="form-select" name="comuna">
+                                <option value="" selected>Elija una opción</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- CONTACTO -->
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label for="">Teléfono Domicilio</label>
+                    <input type="text" class="form-control" name="telefono_fijo">
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Celular de Emergencias</label>
+                    <input type="text" class="form-control" name="celular">
+                </div>
+                <div class="col-sm-4 mb-3 ">
+                    <label for="">Correo electrónico</label>
+                    <input type="email" class="form-control" name="email">
+                </div>
+            </div>
+            <hr>
+            <!-- PROFESIÓN -->
+            <div class="row mb-3">
+                <label for="" class="col-sm-3 col-form-label align-self-center">Profesión</label>
+                <div class="col-sm-5 align-self-center">
+                    <input type="text" class="form-control" name="profesion">
+                </div>
+            </div>
+            <!-- OCUPACIÓN -->
+            <div class="row mb-3">
+                <label for="" class="col-sm-3 col-form-label align-self-center">Ocupación Actual</label>
+                <div class="col-sm-5 align-self-center">
+                    <input type="text" class="form-control" name="ocupacion">
+                </div>
             </div>
         </div>
-        <!-- NOMBRE -->
-        <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="">Nombres</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Apellido Paterno</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Apellido Materno</label>
-                <input type="text" class="form-control" id="">
-            </div>
-        </div>
-        <!-- INFORMACIÓN PERSONAL -->
-        <div class="row">
-            <div class="col-sm-6 mb-3">
-                <label for="">Nacionalidad</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" id="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="">Sexo</label>
-                <select class="form-select">
-                    <option selected>Elija una opción</option>
-                    <option value="1">Masculino</option>
-                    <option value="2">Femenino</option>
-                    <option value="3">Prefiero no responder</option>
-                </select>
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Nivel de Estudio</label>
-                <select class="form-select">
-                    <option selected>Elija un Nivel de Estudio</option>
-                    <optgroup label="Enseñanza Básica">
-                        <option value="1">básica Incompleta</option>
-                        <option value="2">básica Completa</option>
-                    </optgroup>
-                    <optgroup label="Enseñanza Media">
-                        <option value="3">Media Imcompleta</option>
-                        <option value="4">Media Completa</option>
-                    </optgroup>
-                    <optgroup label="Superior Técnico">
-                        <option value="5">Técnico Incompleta</option>
-                        <option value="6">Técnico Completa</option>
-                    </optgroup>
-                    <optgroup label="Superior Universitaria">
-                        <option value="7">Universitario Incompletos</option>
-                        <option value="8">Universitario Completos</option>
-                    </optgroup>
-                    <optgroup label="Postgrado">
-                        <option value="9">Postgrado</option>
-                    </optgroup>
-                </select>
-            </div>
-        </div>
-        <hr>
-        <!-- DIRECCION -->
-        <div class="row">
-            <div class="col-sm-6 mb-3">
-                <label for="">Dirección</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-2 mb-3">
-                <label for="">Numero</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-2 mb-3">
-                <label for="">Departamento</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-2 mb-3">
-                <label for="">Block</label>
-                <input type="text" class="form-control" id="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="">Región</label>
-                <select class="form-select">
-                    <option selected>Elija una Región</option>
-                </select>
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Ciudad</label>
-                <select class="form-select">
-                    <option selected>Elija una Ciudad</option>
-                </select>
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Comuna</label>
-                <select class="form-select">
-                    <option selected>Elija una Comuna</option>
-                </select>
-            </div>
-        </div>
-        <hr>
-        <!-- CONTACTO -->
-        <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="">Teléfono Domicilio</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Celular de Emergencias</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3 ">
-                <label for="">Correo electrónico</label>
-                <input type="email" class="form-control" id="">
-            </div>
-        </div>
-        <hr>
-        <!-- PROFESIÓN -->
-        <div class="row mb-3">
-            <label for="" class="col-sm-3 col-form-label align-self-center">Profesión</label>
-            <div class="col-sm-9 align-self-center">
-                <input type="text" class="form-control" id="">
-            </div>
-        </div>
-        <!-- OCUPACIÓN -->
-        <div class="row mb-3">
-            <label for="" class="col-sm-3 col-form-label align-self-center">Ocupación Actual</label>
-            <div class="col-sm-9 align-self-center">
-                <input type="text" class="form-control" id="">
-            </div>
-        </div>
-    </div>
+    </fieldset>
     <hr>
     <h1>Datos de la madre</h1>
     <div class="form-check">
         <input class="form-check-input" type="checkbox" id="chboxOcultarDatosMadre" onchange="ocultarDatosMadre()">Prefiero no declarar</input>
     </div>
     <!-- DATOS DE LA MADRE-->
-    <div id="datosMadre">
-        <hr>
-        <!-- RUN -->
-        <div class="row">
-            <div class="col-sm-6 mb-3">
-                <label for="">RUN Madre</label>
-                <input type="text" class="form-control" id="">
+    <fieldset id="datosMadre">
+        <div>
+            <hr>
+            <!-- RUN -->
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label for="">RUN Madre</label>
+                    <input type="text" class="form-control" name="rut">
+                </div>
+            </div>
+            <!-- NOMBRE -->
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label for="">Nombres</label>
+                    <input type="text" class="form-control" name="nombres">
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Apellido Paterno</label>
+                    <input type="text" class="form-control" name="app_paterno">
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Apellido Materno</label>
+                    <input type="text" class="form-control" name="app_materno">
+                </div>
+            </div>
+            <!-- INFORMACIÓN PERSONAL -->
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label for="">Nacionalidad</label>
+                    <input type="text" class="form-control" name="nacionalidad">
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" name="fecha_nac">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label for="">Genero</label>
+                    <select class="form-select" name="id_genero">
+                        <option value="" selected>Elija una opción</option>
+                        <option value="1">Masculino</option>
+                        <option value="2">Femenino</option>
+                        <option value="3">Prefiero no responder</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Nivel de Estudio</label>
+                    <select class="form-select" name="nivel_academico">
+                        <option value="" selected>Elija un Nivel de Estudio</option>
+                        <optgroup label="Enseñanza Básica">
+                            <option value="1">Básica Incompleta</option>
+                            <option value="2">Básica Completa</option>
+                        </optgroup>
+                        <optgroup label="Enseñanza Media">
+                            <option value="3">Media Imcompleta</option>
+                            <option value="4">Media Completa</option>
+                        </optgroup>
+                        <optgroup label="Superior Técnico">
+                            <option value="5">Técnico Incompleta</option>
+                            <option value="6">Técnico Completa</option>
+                        </optgroup>
+                        <optgroup label="Superior Universitaria">
+                            <option value="7">Universitario Incompletos</option>
+                            <option value="8">Universitario Completos</option>
+                        </optgroup>
+                        <optgroup label="Postgrado">
+                            <option value="9">Postgrado</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <!-- DIRECCION -->
+            <div class="row mb-3">
+                <label for="" class="col-sm-4 mb-3 col-form-label align-self-center">¿Vive en el mismo hogar que el estudiante?</label>
+                <div class="col-sm-7 align-self-center">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="vive_con_alumno" value="Si" onclick="ocultarDireccionMdr()">
+                        <label class="form-check-label" for="">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="vive_con_alumno" value="No" onclick="mostrarDireccionMdr()">
+                        <label class="form-check-label" for="">No</label>
+                    </div>
+                </div>
+                <div id="direccionMdr" style="display:none;">
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label for="">Dirección</label>
+                            <input type="text" class="form-control" name="direccion">
+                        </div>
+                        <div class="col-sm-2 mb-3">
+                            <label for="">Numero</label>
+                            <input type="text" class="form-control" name="numero">
+                        </div>
+                        <div class="col-sm-2 mb-3">
+                            <label for="">Departamento</label>
+                            <input type="text" class="form-control" name="depto">
+                        </div>
+                        <div class="col-sm-2 mb-3">
+                            <label for="">Block</label>
+                            <input type="text" class="form-control" name="block">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <label for="">Región</label>
+                            <select class="form-select" name="region">
+                                <option value="" selected>Elija una opción</option>
+                                <option value="Metropolitana de Santiago">Metropolitana de Santiago</option>
+                                <option value="Antofagasta">Antofagasta</option>
+                                <option value="Valparaíso">Valparaíso</option>
+                                <option value="Araucanía">Araucanía</option>
+                                <option value="Los Lagos">Los Lagos</option>
+                                <option value="O'Higgins">O'Higgins</option>
+                                <option value="Coquimbo">Coquimbo</option>
+                                <option value="Biobío">Biobío</option>
+                                <option value="Arica y Parinacota">Arica y Parinacota</option>
+                                <option value="Maule">Maule</option>
+                                <option value="Tarapacá">Tarapacá</option>
+                                <option value="Ñuble">Ñuble</option>
+                                <option value="Los Ríos">Los Ríos</option>
+                                <option value="Atacama">Atacama</option>
+                                <option value="Magallanes y de la Antártica Chilena">Magallanes y de la Antártica Chilena</option>
+                                <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos Ibáñez del Campo</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            <label for="">Comuna</label>
+                            <select class="form-select" name="comuna">
+                                <option value="" selected>Elija una opción</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label for="">Teléfono Domicilio</label>
+                    <input type="text" class="form-control" name="telefono_fijo">
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label for="">Celular de Emergencias</label>
+                    <input type="text" class="form-control" name="celular">
+                </div>
+                <div class="col-sm-4 mb-3 ">
+                    <label for="">Correo electrónico</label>
+                    <input type="email" class="form-control" name="email">
+                </div>
+            </div>
+            <hr>
+            <!-- PROFESIÓN -->
+            <div class="row mb-3">
+                <label for="" class="col-sm-3 col-form-label align-self-center">Profesión</label>
+                <div class="col-sm-5 align-self-center">
+                    <input type="text" class="form-control" name="profesion">
+                </div>
+            </div>
+            <!-- OCUPACIÓN -->
+            <div class="row mb-3">
+                <label for="" class="col-sm-3 col-form-label align-self-center">Ocupación Actual</label>
+                <div class="col-sm-5 align-self-center">
+                    <input type="text" class="form-control" name="ocupacion">
+                </div>
             </div>
         </div>
-        <!-- NOMBRE -->
-        <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="">Nombres</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Apellido Paterno</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Apellido Materno</label>
-                <input type="text" class="form-control" id="">
-            </div>
-        </div>
-        <!-- INFORMACIÓN PERSONAL -->
-        <div class="row">
-            <div class="col-sm-6 mb-3">
-                <label for="">Nacionalidad</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" id="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="">Sexo</label>
-                <select class="form-select">
-                    <option selected>Elija una opción</option>
-                    <option value="1">Masculino</option>
-                    <option value="2">Femenino</option>
-                    <option value="3">Prefiero no responder</option>
-                </select>
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Nivel de Estudio</label>
-                <select class="form-select">
-                    <option selected>Elija un Nivel de Estudio</option>
-                    <optgroup label="Enseñanza Básica">
-                        <option value="1">básica Incompleta</option>
-                        <option value="2">básica Completa</option>
-                    </optgroup>
-                    <optgroup label="Enseñanza Media">
-                        <option value="3">Media Imcompleta</option>
-                        <option value="4">Media Completa</option>
-                    </optgroup>
-                    <optgroup label="Superior Técnico">
-                        <option value="5">Técnico Incompleta</option>
-                        <option value="6">Técnico Completa</option>
-                    </optgroup>
-                    <optgroup label="Superior Universitaria">
-                        <option value="7">Universitario Incompletos</option>
-                        <option value="8">Universitario Completos</option>
-                    </optgroup>
-                    <optgroup label="Postgrado">
-                        <option value="9">Postgrado</option>
-                    </optgroup>
-                </select>
-            </div>
-        </div>
-        <hr>
-        <!-- DIRECCION -->
-        <div class="row">
-            <div class="col-sm-6 mb-3">
-                <label for="">Dirección</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-2 mb-3">
-                <label for="">Numero</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-2 mb-3">
-                <label for="">Departamento</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-2 mb-3">
-                <label for="">Block</label>
-                <input type="text" class="form-control" id="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="">Región</label>
-                <select class="form-select">
-                    <option selected>Elija una Región</option>
-                </select>
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Ciudad</label>
-                <select class="form-select">
-                    <option selected>Elija una Ciudad</option>
-                </select>
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Comuna</label>
-                <select class="form-select">
-                    <option selected>Elija una Comuna</option>
-                </select>
-            </div>
-        </div>
-        <hr>
-        <!-- CONTACTO -->
-        <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="">Teléfono Domicilio</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3">
-                <label for="">Celular de Emergencias</label>
-                <input type="text" class="form-control" id="">
-            </div>
-            <div class="col-sm-4 mb-3 ">
-                <label for="">Correo electrónico</label>
-                <input type="email" class="form-control" id="">
-            </div>
-        </div>
-        <hr>
-        <!-- PROFESIÓN -->
-        <div class="row mb-3">
-            <label for="" class="col-sm-3 col-form-label align-self-center">Profesión</label>
-            <div class="col-sm-9 align-self-center">
-                <input type="text" class="form-control" id="">
-            </div>
-        </div>
-        <!-- OCUPACIÓN -->
-        <div class="row mb-3">
-            <label for="" class="col-sm-3 col-form-label align-self-center">Ocupación Actual</label>
-            <div class="col-sm-9 align-self-center">
-                <input type="text" class="form-control" id="">
-            </div>
-        </div>
-    </div>
+    </fieldset>
     <hr>
-    <p class="text-center" style="color: aliceblue;">Al hacer clic en el botón "Enviar Información", el apoderado indica
-        que toda la información declarada del estudiante es verídica. </p>
+    <p class="text-center" style="color: aliceblue;">Al hacer clic en el botón "Enviar Información", el apoderado indica que toda la información declarada del estudiante es verídica. </p>
     <div class="d-grid gap-2 col-6 mx-auto">
         <button class="btn btn-primary mb-3" type="submit">Enviar información</button>
     </div>
 </form>
+{% endblock %}
 
-<script>
-    function ocultarDatosMadre() {
-        var div = document.getElementById("datosMadre");
-        var checkbox = document.getElementById("chboxOcultarDatosMadre");
-        if (checkbox.checked) {
-            div.style.display = "none";
-        } else {
-            div.style.display = "block";
-        }
-    }
-    function ocultarDatosPadre() {
-        var div = document.getElementById("datosPadre");
-        var checkbox = document.getElementById("chboxOcultarDatosPadre");
-        if (checkbox.checked) {
-            div.style.display = "none";
-        } else {
-            div.style.display = "block";
-        }
-    }
-</script>
+{% block script %}
+<script src="{% static 'scripts/matricula-pdr.js' %}"></script>
 {% endblock %}
