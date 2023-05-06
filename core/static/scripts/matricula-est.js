@@ -392,6 +392,10 @@ const comunas = {
 }
 
 run.addEventListener('blur', (ev) => {
+    if (run.value == '') {
+        return;
+    }
+
     const formatted = formatRut(run.value)
     run.value = formatted;
 
@@ -409,6 +413,7 @@ run.addEventListener('blur', (ev) => {
 
                 form_type = 'Modify';
                 info = response[0];
+                console.log(info);
                 
             } else {
                 toast.innerHTML = 'No se encontro informacion.';
@@ -480,7 +485,7 @@ form.addEventListener('submit', async (ev) => {
                     toast.innerHTML = 'Informacion guardada con exito, redirigiendo...';
 
                     setTimeout(() => {
-                        location.href = `/matricula-infoest?id=${id_matricula}`;
+                        location.href = `/matricula-infoest/${id_matricula}`;
                         toast.style.display = 'none';
                     }, 6000)
                 } else {
@@ -508,6 +513,10 @@ form.addEventListener('submit', async (ev) => {
 });
 
 function formatRut(rut) {
+    if (rut == '') {
+        return '';
+    }
+
     rut = rut.toString();
     var sRut = (rut + '').replace(/[^\dkK]/g, '');
     var sRutDV = sRut.slice(-1);

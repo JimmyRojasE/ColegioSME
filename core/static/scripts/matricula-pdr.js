@@ -3,11 +3,9 @@ const madreRegion = document.querySelector('#direccionMdr > div:nth-child(2) > d
 const padreRegion = document.querySelector('#direccionPdr > div:nth-child(2) > div:nth-child(1) > select');
 const padreComuna = document.querySelector('#direccionPdr > div:nth-child(2) > div:nth-child(2) > select');
 const madreComuna = document.querySelector('#direccionMdr > div:nth-child(2) > div:nth-child(2) > select');
+const matricula = document.currentScript.dataset;
 
-const id = new URLSearchParams(window.location.search).get('id');
-if (id == null) {
-    alert('No se detecto id de matricula, esto puede causar errores.');
-}
+console.log(matricula.id);
 
 let datosPadre = true;
 let datosMadre = true;
@@ -474,7 +472,7 @@ form.addEventListener('submit', async (ev) => {
         delete data['madre'];
     }
 
-    fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_padres/${id}`, {
+    fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_padres/${matricula.id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

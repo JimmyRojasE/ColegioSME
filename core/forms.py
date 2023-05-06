@@ -20,7 +20,7 @@ class DireccionForm(forms.ModelForm):
 class GrupoFamiliarForm(forms.ModelForm):
     class Meta:
         model=GrupoFamiliar
-        fields=('id_gr_fam','nombre','edad','parentesco')       
+        fields=('__all__')
 
 class CursoRepetidoForm(forms.ModelForm):
     class Meta:

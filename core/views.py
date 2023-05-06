@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Curso,Colegio,Direccion,GrupoFamiliar,Persona,CursoRepetido
-from .forms import CursoForm,ColegioForm, DireccionForm,GrupoFamiliarForm,CursoRepetidoForm
+from .models import Curso, Colegio, Direccion, GrupoFamiliar, Persona, CursoRepetido
+from .forms import CursoForm, ColegioForm, DireccionForm, GrupoFamiliarForm, CursoRepetidoForm
 
 # Create your views here.
 def inicio(request):
@@ -9,17 +9,14 @@ def inicio(request):
 def matriculasEst(request):
     return render(request, 'matricula/matricula-est.html')
 
-def matriculasInfoest(request):
-    return render(request, 'matricula/matricula-infoest.html')
+def matriculasInfoest(request, id):
+    return render(request, 'matricula/matricula-infoest.html', { 'id_matricula': id })
 
-def matriculasMdr(request):
-    return render(request, 'matricula/matricula-mdr.html')
+def matriculasPdr(request, id):
+    return render(request, 'matricula/matricula-pdr.html', { 'id_matricula': id })
 
-def matriculasPdr(request):
-    return render(request, 'matricula/matricula-pdr.html')
-
-def matriculasApd(request):
-    return render(request, 'matricula/matricula-apd.html')
+def matriculasApd(request, id):
+    return render(request, 'matricula/matricula-apd.html', { 'id_matricula': id })
 
 def login(request):
     return render(request, 'auth/login.html')
@@ -112,30 +109,34 @@ def eliminarColegio(request,id):
     curso.delete()
     return redirect(to="listarColegio")
 
-def listarGrupoFamiliar(request):
-    grupoFamiliar=GrupoFamiliar.objects.all()
+def listarGrupoFamiliar(request,id):
+    grupoFamiliar=GrupoFamiliar.objects.filter(id_matricula=id)
+    # grupoFamiliar=get_object_or_404(GrupoFamiliar,id_matricula=id)
     data={
-        'grupoFamiliar':grupoFamiliar
+        'grupoFamiliar': grupoFamiliar,
+        'id_matricula': id
     }
 
-    return render(request,'grupoFamiliar/listar-grupoFamiliar.html',data)
+    return render(request, 'grupoFamiliar/listar-grupoFamiliar.html', data)
 
-def crearGrupoFamiliar(request):
-    data={
-    'form':GrupoFamiliarForm(),
-    
+def crearGrupoFamiliar(request, id):
+    data = {
+        'form': GrupoFamiliarForm(initial= { 'id_matricula': id } ),
+        'id_matricula': id
     }
+
     if request.method=='POST':
        formulario=GrupoFamiliarForm(data=request.POST)
+       
        if formulario.is_valid():
            formulario.save()
-           return redirect(to="listarGrupoFamiliar")
+           return redirect(to=f"/listar-grupoFamiliar/{id}")
        else:
            data["form"]=formulario
 
     return render(request,'grupoFamiliar/crear-grupoFamiliar.html',data)
 
-def editarGrupoFamiliar(request,id):
+def editarGrupoFamiliar(request,id,idmatricula):
 
     grupofamiliar=get_object_or_404(GrupoFamiliar,id_gr_fam=id)
     data={
@@ -145,15 +146,15 @@ def editarGrupoFamiliar(request,id):
         formulario=GrupoFamiliarForm(data=request.POST,instance=grupofamiliar)
         if formulario.is_valid():
             formulario.save()
-            return redirect(to="listarGrupoFamiliar")
+            return redirect(to=f"/listar-grupoFamiliar/{idmatricula}")
         data['form']=formulario
 
     return render(request,'grupoFamiliar/editar-grupoFamiliar.html',data)
 
-def eliminarGrupoFamiliar(request,id):
+def eliminarGrupoFamiliar(request,id,idmatricula):
     curso=get_object_or_404(GrupoFamiliar,id_gr_fam=id)
     curso.delete()
-    return redirect(to="listarGrupoFamiliar")
+    return redirect(to=f"listarGrupoFamiliar/{idmatricula}")
 
 def crearUsuario(request):
     return render(request,'usuarios/crear-usuario.html')

@@ -1,14 +1,8 @@
 const form = document.getElementById('matricula');
-const id = new URLSearchParams(window.location.search).get('id');
+const matricula = document.currentScript.dataset;
 
 const toast = document.querySelector('.toast-message');
 toast.style.display = 'none';
-
-if (id == null) {
-    alert('No se detecto id de matricula, esto puedo causar errores.');
-}
-
-console.log(id);
 
 form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
@@ -30,7 +24,7 @@ form.addEventListener('submit', async (ev) => {
     toast.style.display = 'block';
     toast.innerHTML = 'Modificando informacion, por favor espere...';
 
-    fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/info_alumno/${id}`, {
+    fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/info_alumno/${matricula.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'  
@@ -43,7 +37,7 @@ form.addEventListener('submit', async (ev) => {
             toast.innerHTML = 'Informacion guardada con exito, redirigiendo...';
 
             setTimeout(() => {
-                location.href = '/matricula-pdr'
+                location.href = `/matricula-pdr/${matricula.id}`;
                 toast.style.display = 'none';
             }, 6000)
         } else {
