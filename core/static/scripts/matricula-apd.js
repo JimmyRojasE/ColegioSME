@@ -460,16 +460,14 @@ form.addEventListener('submit', async (ev) => {
         }
     }
 
-    console.log(data);
+    const request = await fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_apoderado/${matricula.id}`, { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
+    const response = await request.json();
 
-    // const request = await fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_padres/${matricula.id}`);
-    // const response = await request.json();
-
-    // if (response.ok) {
-        
-    // } else {
-
-    // }
+    if (response.ok) {
+        console.log('OK');
+    } else {
+        console.log('ERROR');
+    }
 });
 
 function mostrarDireccionApd() {

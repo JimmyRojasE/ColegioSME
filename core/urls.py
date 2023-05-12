@@ -1,14 +1,14 @@
 from django.urls import path
 from .views import inicio, matriculasEst, matriculasApd, login,matriculasPdr,matriculasInfoest,crearCurso, crearProfesor,listarCurso,editarCurso,eliminarCurso,listarColegio,editarColegio,eliminarColegio,crearColegio,listarGrupoFamiliar,crearGrupoFamiliar,eliminarGrupoFamiliar,editarGrupoFamiliar,crearUsuario,editarUsuario,listarUsuario,eliminarUsuario,crearCursoReprobado,listarCursoReprobado,editarCursoReprobado,eliminarCursoReprobado
 urlpatterns = [
-    path('', inicio),
+    path('', inicio, name='inicio'),
     path('matricula-est', matriculasEst),
     path('matricula-apd/<id>', matriculasApd),
     path('matricula-pdr/<id>', matriculasPdr),
     path('matricula-infoest/<id>', matriculasInfoest, name='matriculasInfoest'),
     path('crear-curso',crearCurso),
     path('crear-profesor',crearProfesor),
-    path('login', login),
+    path('login', login, name='login'),
     path('listar-curso/', listarCurso, name="listarCurso"),
     path('eliminar-curso/<id>', eliminarCurso, name="eliminarCurso"),
     path('editar-curso/<id>', editarCurso, name="editarCurso"),

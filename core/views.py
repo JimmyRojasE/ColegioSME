@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Curso, Colegio, Direccion, GrupoFamiliar, Persona, CursoRepetido
-from .forms import CursoForm, ColegioForm, DireccionForm, GrupoFamiliarForm, CursoRepetidoForm
+from .models import Curso, Colegio, Direccion, GrupoFamiliar, Persona, CursoRepetido,Usuario
+from .forms import CursoForm, ColegioForm, DireccionForm, GrupoFamiliarForm, CursoRepetidoForm,UsuarioForm
 
-# Create your views here.
+# Create your views here readonly.
 def inicio(request):
     return render(request, 'index.html')
 
@@ -19,7 +19,12 @@ def matriculasApd(request, id):
     return render(request, 'matricula/matricula-apd.html', { 'id_matricula': id })
 
 def login(request):
-    return render(request, 'auth/login.html')
+    data={
+        'form':UsuarioForm()
+    }
+    
+  
+    return render(request, 'auth/login.html',data)
 
 def crearProfesor(request):
     return render(request, 'profesor/crear-profesor.html')

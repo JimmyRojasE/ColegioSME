@@ -1,25 +1,30 @@
-{% extends 'base.html' %}
+{% extends 'baseUsuarios.html' %}
 
 {% block content %}
+{% load crispy_forms_tags %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-3">
         <div class="card">
             <div class="card-header">
                 <h4>Iniciar Sesión</h4>
             </div>
             <div class="card-body">
-                <form>
+                <form action="" class="" id="formLogin" method="POST">
+                    {%csrf_token%}
                     <div class="mb-3">
-                        <label for="email" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">Nunca compartiremos su correo electrónico con nadie más.
-                        </div>
+                        <label for="number" class="form-label">Ingrese Usuario</label>
+                        {{form.id_usuario | crispy}}
+                        <input type="text" class="form-control" id="number" aria-describedby="numeric">
+                        
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña</label>
+                        {{form.password | crispy}}
                         <input type="password" class="form-control" id="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    <a href="{%url 'inicio'%}"class="btn btn-warning">Volver al Home</a>
+                    
                 </form>
             </div>
         </div>
@@ -28,14 +33,5 @@
 {% endblock %}
 
 {% block styles %}
-<style>
-    html,
-    body {
-        background-color: #87b7f5;
-        height: 75%;
-    }
-    input {
-        border: 1px solid black !important;
-    }
-</style>
+
 {% endblock %}
