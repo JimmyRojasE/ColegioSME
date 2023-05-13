@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import inicio, matriculasEst, matriculasApd, login,matriculasPdr,matriculasInfoest,crearCurso, crearProfesor,listarCurso,editarCurso,eliminarCurso,listarColegio,editarColegio,eliminarColegio,crearColegio,listarGrupoFamiliar,crearGrupoFamiliar,eliminarGrupoFamiliar,editarGrupoFamiliar,crearUsuario,editarUsuario,listarUsuario,eliminarUsuario,crearCursoReprobado,listarCursoReprobado,editarCursoReprobado,eliminarCursoReprobado
+from .views import inicio, matriculasEst, matriculasApd, login,logout,matriculasPdr,matriculasInfoest,crearCurso, crearProfesor,listarCurso,editarCurso,eliminarCurso,listarColegio,editarColegio,eliminarColegio,crearColegio,listarGrupoFamiliar,crearGrupoFamiliar,eliminarGrupoFamiliar,editarGrupoFamiliar,crearUsuario,editarUsuario,listarUsuario,eliminarUsuario,crearCursoReprobado,listarCursoReprobado,editarCursoReprobado,eliminarCursoReprobado
 urlpatterns = [
     path('', inicio, name='inicio'),
     path('matricula-est', matriculasEst),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('crear-curso',crearCurso),
     path('crear-profesor',crearProfesor),
     path('login', login, name='login'),
+    path('logout', logout, name='logout'),
     path('listar-curso/', listarCurso, name="listarCurso"),
     path('eliminar-curso/<id>', eliminarCurso, name="eliminarCurso"),
     path('editar-curso/<id>', editarCurso, name="editarCurso"),
