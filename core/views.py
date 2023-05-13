@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Curso, Colegio, Direccion, GrupoFamiliar, Persona, CursoRepetido,Usuario
 from .forms import CursoForm, ColegioForm, DireccionForm, GrupoFamiliarForm, CursoRepetidoForm,UsuarioForm
+from django.contrib import messages
 
 # Create your views here readonly.
 def inicio(request):
+   
     return render(request, 'index.html')
 
 def matriculasEst(request):
@@ -18,13 +20,35 @@ def matriculasPdr(request, id):
 def matriculasApd(request, id):
     return render(request, 'matricula/matricula-apd.html', { 'id_matricula': id })
 
-def login(request):
+def login (request):
     data={
         'form':UsuarioForm()
     }
-    
-  
+    if request.method=='POST':
+        try:
+            usuario=Usuario.objects.get(id_usuario=request.POST['id_usuario'], password=request.POST['password'])
+            persona=Persona.objects.get(run=request.POST['id_usuario'])
+            print("usuario=",usuario.id_usuario,usuario.password,usuario.id_rol_usuario,usuario.id_estado_usuario)
+            print("persona=",persona.p_nombre,persona.app_paterno)
+            nombre=persona.p_nombre + ' ' + persona.app_paterno
+            request.session['nombre']=nombre
+            return render(request,'index.html')
+        except Usuario.DoesNotExist as e:
+            messages.success(request,'Usuario o Password Incorrectos..')
+        except Persona.DoesNotExist as e:
+            messages.success(request,'Falta Ingresar Datos Personales..')
+        except:
+            messages.success(request,'Ingrese Información Válida ..')
     return render(request, 'auth/login.html',data)
+
+def logout(request):
+    try:
+        del request.session['nombre']
+    except:
+        return render(request,'index.html')
+    return render(request,'index.html')
+
+
 
 def crearProfesor(request):
     return render(request, 'profesor/crear-profesor.html')

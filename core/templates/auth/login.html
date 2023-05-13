@@ -11,21 +11,34 @@
             <div class="card-body">
                 <form action="" class="" id="formLogin" method="POST">
                     {%csrf_token%}
-                    <div class="mb-3">
+                    <div class="row mb-3">
                         <label for="number" class="form-label">Ingrese Usuario</label>
                         {{form.id_usuario | crispy}}
-                        <input type="text" class="form-control" id="number" aria-describedby="numeric">
+                        <input type="number" class="form-control" name="id_usuario" id="id_usuario" aria-describedby="number">
                         
                     </div>
-                    <div class="mb-3">
+                    <div class="mt-3">
                         <label for="password" class="form-label">Contraseña</label>
                         {{form.password | crispy}}
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="password" name="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                    <a href="{%url 'inicio'%}"class="btn btn-warning">Volver al Home</a>
-                    
+                    <div class="row mt-3">
+                        <div class="col-md-6 col-sm-12">
+                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <a href="{%url 'inicio'%}"class="btn btn-warning">Ir al Home</a>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        {%if messages %}
+                            {% for msg in messages %}
+                            <b> {{msg}}</b>
+                            {%endfor%}
+                        {%endif%}
+                    </div>
                 </form>
+               
             </div>
         </div>
     </div>
