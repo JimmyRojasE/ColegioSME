@@ -40,7 +40,8 @@
                             {{p.run}} - {{p.dv}}
                         </td>
                         <td>
-                            <a class="btn btn-primary">Ver información</a>
+                            <a href="#" class="modal-trigger" data-toggle="modal" data-target="#myModal{{p.run}}">Abrir modal</a>
+
                         </td>
                     </tr>
                     {%endfor%}  
@@ -49,4 +50,27 @@
         </div>
     </div>
 </div>
+
+{% for p in Personas%}
+<div class="modal fade" id="myModal{{p.run}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Contenido del modal -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal {{p.p_nombre}}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido dinámico del modal -->
+                <p>{{p.p_nombre}}</p>
+                <p>{{p.p_nombre}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor%}
 {%endblock%}
+
+{% block script %}
+<script src="{% static 'scripts/listar-usuario.js' %}"></script>
+{% endblock %}

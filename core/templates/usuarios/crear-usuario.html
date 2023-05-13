@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-6 mb-3">
             <label for="">RUN Colaborador</label>
-            <input type="text" class="form-control" name="run" ....>
+            <input type="text" class="form-control" name="rut" ....>
         </div>
     </div>
     <div class="row">
@@ -43,7 +43,7 @@
         <div class="col-sm-4 mb-3">
             <label for="">Género</label>
             <select class="form-select" name="genero" ....>
-                <option selected>Elija una opción</option>
+                <option value="" selected>Elija una opción</option>
                 <option value="1">Masculino</option>
                 <option value="2">Femenino</option>
                 <option value="3">Prefiero no responder</option>
@@ -74,7 +74,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3 mb-3">
+        <div class="col-sm-4 mb-3">
             <label for="">Región</label>
             <select class="form-select" name="region" required>
                 <option value="" selected>Elija una opción</option>
@@ -96,11 +96,24 @@
                 <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos Ibáñez del Campo</option>
             </select>
         </div>
-        <div class="col-sm-3 mb-3">
+        <div class="col-sm-4 mb-3">
             <label for="">Comuna</label>
             <select class="form-select" name="comuna" required>
                 <option selected>Elija una opción</option>
             </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 mb-3">
+            <label for="">Teléfono Domicilio</label>
+            <input type="text" class="form-control" name="telefono_fijo" required>
+        </div>
+        <div class="col-sm-4 mb-3">
+            <label for="">Celular de emergencias</label>
+            <div class="input-group">
+                <span class="input-group-text" id="celular">+56</span>
+                <input type="text" class="form-control" name="celular" aria-describedby="celular">
+            </div>
         </div>
     </div>
     <hr>
@@ -156,8 +169,7 @@
     </div>
 </form>
 
-<div class="toast-message">
-    This is a message
+<div class="toast-message" style="display: none;">
 </div>
 {% endblock %}
 

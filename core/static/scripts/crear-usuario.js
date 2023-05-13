@@ -1,134 +1,72 @@
-const form = document.getElementById('crear-usuario');
-const run = document.querySelector('input[name=run]');
-
+const form = document.querySelector('#crear-usuario');
+const rut = document.querySelector('input[name=rut]');
 const region = document.querySelector('select[name=region]');
 const comuna = document.querySelector('select[name=comuna]');
-let comunas = {};
+const toastcontroller = document.querySelector('.toast-message');
 
-const toast = document.querySelector('.toast-message');
-toast.style.display = 'none';
+rut.addEventListener('blur', (ev) => {
+    if (rut.value == '' || rut.length < 1) return;
 
-let form_type = 'Create';
+    rut.value = rut.value.replace(/(\d)(\d)$/, '$1-$2').replace(/[.]/g, '');;
+});
+region.addEventListener('change', async (ev) => {
+    comuna.innerHTML = '<option value="" selected>Elija una opcion</option>';
+    const request = await fetch('/static/environment/comunas.json');
+    const comunas = await request.json();
 
-fetch('/static/scripts/comunas.json').then(data => data.json()).then(response => comunas = response).catch(err => console.log(err));
-
-run.addEventListener('blur', (ev) => {
-    const formatted = formatRut(run.value)
-    run.value = formatted;
-
-    const searched = formatted.split('-').slice(0, 1)[0].split('.').join('');
-    const dv = formatted.split('-')[1];
-})
-
+    for (let i = 0; i < comunas[region.value].length; i++) {
+        const data = comunas[region.value][i];
+        comuna.innerHTML += `<option value="${data['id']}">${data['name']}</option>`;
+    }
+});
 form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
 
-    const inputs = document.querySelectorAll('input');
-    const options = document.querySelectorAll('select');
-    const button = document.querySelector('button[type=submit]');
+    const options = form.querySelectorAll('input, select');
     let data = {};
-
-    for (let i = 0; i < inputs.length; i++) {
-        const input = inputs[i];
-
-        if (input.type == 'radio') {
-            if (input.checked) {
-                data[input.name] = input.value;
-            }
-        } else {
-            data[input.name] = input.value;
-        }
-    }
     for (let i = 0; i < options.length; i++) {
-        const option = options[i];
-        data[option.name] = option.value;
+        const index = options[i];
+        data[index.name] = index.value;
     }
+    data = format(data);
 
-    button.disabled = true;
-    toast.style.display = 'block';
-    toast.innerHTML = 'Guardando informacion, por favor espere...';
+    showMessage('Verificando informacion, porfavor espere.');
 
-    if (form_type == 'Create') {
-        fetch('http://190.161.35.216:8085/cl/csme/usuarios/api/crear_usuario', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(data => data.json())
-            .then(response => {
-                console.log(response);
-                    if (response.ok) {
-                        toast.innerHTML = 'Informacion guardada con exito, redirigiendo...';
-                        setTimeout(() => {
-                            location.href = `/matricula-infoest/${id_matricula}`;
-                            toast.style.display = 'none';
-                        }, 6000)
-                    } else {
-                        toast.innerHTML = 'Se encontro un error, revise la informacion e ingrese nuevamente.';
-                        setTimeout(() => {
-                            toast.style.display = 'none';
-                        }, 4000)
-                    }
-            })
-            .catch(err => {
-                console.log(err);
+    const request = await fetch('http://190.161.35.216:8085/cl/csme/usuarios/api/crear_usuario', { method: 'POST', body: data, headers: { 'Content-Type': 'application/json' } });
+    const response = await request.json();
 
-                toast.innerHTML = 'Hubo un error interno, intente nuevamente...';
-                button.disabled = false;
-
-                setTimeout(() => {
-                    toast.style.display = 'none';
-                }, 4000)
-            });
-    } else if (form_type == 'Modify') {
-        fetch('')
-            .then()
-            .then()
-            .catch();
+    if (response.ok) {
+        showMessage('Informacion valida, redirigiendo...');
+        setTimeout(() => {
+            location.href = `/listar-usuario/`;
+        }, 4000);
+    } else {
+        showMessage('Hubo un error, intente nuevamente.', 5000);
     }
 });
 
-function mostrarCargo() {
-    var cargoAdmin = document.getElementById("cargoAdmin");
-    cargoAdmin.style.display = "block";
+function format(data) {
+    const nombres = data['nombres'].split(' ');
+    data['p_nombre'] = nombres[0];
+    data['s_nombre'] = nombres.slice(1).join(' ');
+    delete data['nombres'];
+
+    const rut = data['rut'].split('-');
+    data['rut'] = rut[0];
+    data['dv'] = rut[1];
+
+    data['depto'] = data['depto'] == '' ? 0 : data['depto'];
+
+    return JSON.stringify(data);
 }
+function showMessage(message, duration = 0) {
+    toastcontroller.style.display = 'block';
+    toastcontroller.innerHTML = message;
 
-function ocultarCargo() {
-    var cargoAdmin = document.getElementById("cargoAdmin");
-    cargoAdmin.style.display = "none";
+    if (duration > 0) {
+        setTimeout(() => {
+            toastcontroller.style.display = 'none';
+            toastcontroller.innerHTML = '';
+        }, duration);
+    }
 }
-
-function formatRut(rut) {
-    if (rut == '') {
-        return '';
-    }
-
-    rut = rut.toString();
-    var sRut = (rut + '').replace(/[^\dkK]/g, '');
-    var sRutDV = sRut.slice(-1);
-    sRut = sRut.slice(0, -1);
-    var sFormatted = '';
-    while (sRut.length > 3) {
-        sFormatted = '.' + sRut.slice(-3) + sFormatted;
-        sRut = sRut.slice(0, -3);
-    }
-    sFormatted = sRut + sFormatted;
-    sFormatted += '-' + sRutDV;
-    return sFormatted;
-}
-
-region.addEventListener('change', (ev) => {
-    if (region.value === '') {
-        comuna.innerHTML = '<option value="" selected>Elija una opción</option>';
-        return;
-    }
-
-    const data = comunas[region.value];
-    let string = '';
-    for (let i = 0; i < data.length; i++) {
-        string += `<option value="${data[i].id}">${data[i].name}</option>`
-    }
-    comuna.innerHTML = string;
-});

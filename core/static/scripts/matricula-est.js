@@ -7,7 +7,7 @@ const toastcontroller = document.querySelector('.toast-message');
 rut.addEventListener('blur', (ev) => {
     if (rut.value == '' || rut.length < 1) return;
 
-    rut.value = rut.value.replace(/(\d)(\d)$/, '$1-$2');
+    rut.value = rut.value.replace(/(\d)(\d)$/, '$1-$2').replace(/[.]/g, '');;
 });
 region.addEventListener('change', async (ev) => {
     comuna.innerHTML = '<option value="" selected>Elija una opcion</option>';
@@ -38,7 +38,7 @@ form.addEventListener('submit', async (ev) => {
     if (response.ok) {
         showMessage('Informacion valida, redirigiendo...');
         setTimeout(() => {
-            location.href = `/matricula-infoest/${response.id_matricula}`;
+            location.href = `/matricula-infoest/${response.data['id_matricula']}`;
         }, 4000);
     } else {
         showMessage('Hubo un error, intente nuevamente.', 5000);
