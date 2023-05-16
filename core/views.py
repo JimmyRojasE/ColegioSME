@@ -66,12 +66,12 @@ def crearCurso(request):
     'form':CursoForm()
     }
     if request.method=='POST':
-       formulario=CursoForm(data=request.POST)
-       if formulario.is_valid():
-           formulario.save()
-           return redirect(to="listarCurso")
-       else:
-           data["form"]=formulario
+        formulario=CursoForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listarCurso")
+        else:
+            data["form"]=formulario
 
     return render(request,'curso/crear-curso.html',data)
 
@@ -109,12 +109,12 @@ def crearColegio(request):
     'form2':DireccionForm()
     }
     if request.method=='POST':
-       formulario=ColegioForm(data=request.POST)
-       if formulario.is_valid():
-           formulario.save()
-           return redirect(to="listarColegio")
-       else:
-           data["form"]=formulario
+        formulario=ColegioForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listarColegio")
+        else:
+            data["form"]=formulario
 
     return render(request,'colegio/crear-colegio.html',data)
 
@@ -155,13 +155,13 @@ def crearGrupoFamiliar(request, id):
     }
 
     if request.method=='POST':
-       formulario=GrupoFamiliarForm(data=request.POST)
-       
-       if formulario.is_valid():
-           formulario.save()
-           return redirect(to=f"/listar-grupoFamiliar/{id}")
-       else:
-           data["form"]=formulario
+        formulario=GrupoFamiliarForm(data=request.POST)
+        
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to=f"/listar-grupoFamiliar/{id}")
+        else:
+            data["form"]=formulario
 
     return render(request,'grupoFamiliar/crear-grupoFamiliar.html',data)
 
@@ -206,12 +206,12 @@ def crearCursoReprobado(request):
     'form':CursoRepetidoForm()
     }
     if request.method=='POST':
-       formulario=CursoRepetidoForm(data=request.POST)
-       if formulario.is_valid():
-           formulario.save()
-           return redirect(to="listarCursoRepetido")
-       else:
-           data["form"]=formulario
+        formulario=CursoRepetidoForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listarCursoRepetido")
+        else:
+            data["form"]=formulario
 
     return render(request,'cursosReprobados/crear-curso-reprobado.html',data)
 

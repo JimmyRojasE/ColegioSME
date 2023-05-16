@@ -2,6 +2,7 @@ const form = document.querySelector('#matricula');
 const rut = document.querySelectorAll('input[name=rut]');
 const region = document.querySelectorAll('select[name=region]');
 const comuna = document.querySelectorAll('select[name=comuna]');
+const toastcontroller = document.querySelector('.toast-message');
 const matricula = document.currentScript.dataset;
 
 rut[0].addEventListener('blur', (ev) => {
@@ -14,7 +15,6 @@ rut[1].addEventListener('blur', (ev) => {
 
     rut[1].value = rut[1].value.replace(/(\d)(\d)$/, '$1-$2').replace(/[.]/g, '');;
 });
-
 region[0].addEventListener('change', async (ev) => {
     comuna[0].innerHTML = '<option value="" selected>Elija una opcion</option>';
     const request = await fetch('/static/environment/comunas.json');
@@ -67,15 +67,20 @@ form.addEventListener('submit', async (ev) => {
             data.madre[index.name] = index.value;
         }
     }
-    data = format(data);
+    format(data);
+
+    showMessage('Verificando informacion, porfavor espere.');
 
     const request = await fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_padres/${matricula.id}`, { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
     const response = await request.json();
 
     if (response.ok) {
-        location.href = `/matricula-apd/${matricula.id}`;
+        showMessage('Informacion valida, redirigiendo...');
+        setTimeout(() => {
+            location.href = `/matricula-apd/${matricula.id}`;
+        }, 4000)
     } else {
-        console.log('A ocurrido un error.');
+        showMessage('Hubo un error, intente nuevamente.', 5000);
     }
 });
 
@@ -96,12 +101,12 @@ function format(data) {
     const nombres = data.padre['nombres'].split(' ');
     data.padre['p_nombre'] = nombres[0];
     data.padre['s_nombre'] = nombres.slice(1).join(' ');
-    delete data.padres['nombres'];
+    delete data.padre['nombres'];
 
-    const nombres1 = data.madres['nombres'].split(' ');
-    data.madres['p_nombre'] = nombres1[0];
-    data.madres['s_nombre'] = nombres1.slice(1).join(' ');
-    delete data.madres['nombres'];
+    const nombres1 = data.madre['nombres'].split(' ');
+    data.madre['p_nombre'] = nombres1[0];
+    data.madre['s_nombre'] = nombres1.slice(1).join(' ');
+    delete data.madre['nombres'];
 
     const rut = data.padre['rut'].split('-');
     data.padre['rut'] = rut[0];
@@ -113,131 +118,16 @@ function format(data) {
 
     data.padre['depto'] = data.padre['depto'] == '' ? 0 : data.padre['depto'];
     data.madre['depto'] = data.madre['depto'] == '' ? 0 : data.madre['depto'];
-
-    return JSON.stringify(data);
 }
 
-// const form = document.querySelector('form');
-// const madreRegion = document.querySelector('#direccionMdr > div:nth-child(2) > div:nth-child(1) > select');
-// const padreRegion = document.querySelector('#direccionPdr > div:nth-child(2) > div:nth-child(1) > select');
-// const padreComuna = document.querySelector('#direccionPdr > div:nth-child(2) > div:nth-child(2) > select');
-// const madreComuna = document.querySelector('#direccionMdr > div:nth-child(2) > div:nth-child(2) > select');
-// const matricula = document.currentScript.dataset;
+function showMessage(message, duration = 0) {
+    toastcontroller.style.display = 'block';
+    toastcontroller.innerHTML = message;
 
-// console.log(matricula.id);
-
-// let datosPadre = true;
-// let datosMadre = true;
-
-// form.addEventListener('submit', async (ev) => {
-//     ev.preventDefault();
-
-//     const fieldsets = form.querySelectorAll('fieldset');
-//     let data = {
-//         padre: {},
-//         madre: {}
-//     }
-//     if (datosPadre) {
-//         const padreInfo = fieldsets[0].querySelectorAll('input');
-//         const padreInfoSelects = fieldsets[0].querySelectorAll('select');
-
-//         for (let i = 0; i < padreInfo.length; i++) {
-//             const info = padreInfo[i];
-            
-//             if (info.type == 'radio') {
-//                 if (info.checked) {
-//                     data.padre[info.name] = info.value;
-//                 }
-//             } else {
-//                 data.padre[info.name] = info.value;
-//             }
-//         }
-//         for (let i = 0; i < padreInfoSelects.length; i++) {
-//             const info = padreInfoSelects[i];
-//             data.padre[info.name] = info.value;
-//         }
-//     } else {
-//         delete data['padre'];
-//     }
-
-//     if (datosMadre) {
-//         const madreInfo = fieldsets[1].querySelectorAll('input');
-//         const madreInfoSelects = fieldsets[1].querySelectorAll('select');
-
-//         for (let i = 0; i < madreInfo.length; i++) {
-//             const info = madreInfo[i];
-
-//             if (info.type == 'radio') {
-//                 if (info.checked) {
-//                     data.madre[info.name] = info.value;
-//                 }
-//             } else {
-//                 data.madre[info.name] = info.value;
-//             }
-//         }
-//         for (let i = 0; i < madreInfoSelects.length; i++) {
-//             const info = madreInfoSelects[i];
-//             data.madre[info.name] = info.value;
-//         }
-//     } else {
-//         delete data['madre'];
-//     }
-
-//     fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_padres/${matricula.id}`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(data)
-//     })
-//     .then(data => data.json())
-//     .then(response => {
-//         console.log(response);
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     })
-// });
-
-// function ocultarDatosMadre() {
-//     var div = document.getElementById("datosMadre");
-//     var checkbox = document.getElementById("chboxOcultarDatosMadre");
-
-//     if (checkbox.checked) {
-//         div.style.display = "none";
-//         datosMadre = false;
-//     } else {
-//         div.style.display = "block";
-//         datosMadre = true;
-//     }
-// }
-// function ocultarDatosPadre() {
-//     var div = document.getElementById("datosPadre");
-//     var checkbox = document.getElementById("chboxOcultarDatosPadre");
-
-//     if (checkbox.checked) {
-//         div.style.display = "none";
-//         datosPadre = false;
-//     } else {
-//         div.style.display = "block";
-//         datosPadre = true;
-//     }
-    
-// }
-
-// function mostrarDireccionMdr() {
-//     var direccionMdr = document.getElementById("direccionMdr");
-//     direccionMdr.style.display = "block";
-// }
-// function ocultarDireccionMdr() {
-//     var direccionMdr = document.getElementById("direccionMdr");
-//     direccionMdr.style.display = "none";
-// }
-// function mostrarDireccionPdr() {
-//     var direccionPdr = document.getElementById('direccionPdr');
-//     direccionPdr.style.display = "block";
-// }
-// function ocultarDireccionPdr() {
-//     var direccionPdr = document.getElementById('direccionPdr');
-//     direccionPdr.style.display = "none";
-// }
+    if (duration > 0) {
+        setTimeout(() => {
+            toastcontroller.style.display = 'none';
+            toastcontroller.innerHTML = '';
+        }, duration);
+    }
+}

@@ -3,6 +3,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/matriculas.css' %}">
+<link rel="stylesheet" href="{% static 'css/toast-controller.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -259,11 +260,11 @@
                 <label for="" class="col-sm-4 mb-2 col-form-label align-self-center">¿Vive en el mismo hogar que el estudiante?</label>
                 <div class="col-sm-7 align-self-center">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="vive_con_alumno" value="Si" onclick="alternarDireccionMdr(false)">
+                        <input class="form-check-input" type="radio" name="vive_con_alumno1" value="Si" onclick="alternarDireccionMdr(false)">
                         <label class="form-check-label" for="">Si</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="vive_con_alumno" value="No" onclick="alternarDireccionMdr(true)">
+                        <input class="form-check-input" type="radio" name="vive_con_alumno1" value="No" onclick="alternarDireccionMdr(true)">
                         <label class="form-check-label" for="">No</label>
                     </div>
                 </div>
@@ -356,6 +357,9 @@
         <button class="btn btn-primary mb-2" type="submit">Enviar información</button>
     </div>
 </form>
+
+<div class="toast-message" style="display: none;">
+</div>
 {% endblock %}
 
 {% block script %}
