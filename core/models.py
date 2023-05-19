@@ -6,9 +6,6 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
-import uuid
-
 
 class Administrador(models.Model):
     id_persona = models.OneToOneField('Persona', models.DO_NOTHING, unique=True,db_column='id_persona', primary_key=True)  # The composite primary key (id_persona, run) found, that is not supported. The first column is selected.
@@ -212,7 +209,7 @@ class Colegio(models.Model):
     id_colegio = models.AutoField(primary_key=True)
     nombre_colegio = models.CharField(max_length=50)
     representante_legal = models.CharField(max_length=50)
-    telefono = PhoneNumberField()
+    telefono = models.IntegerField()
     id_direccion = models.ForeignKey('Direccion', models.DO_NOTHING, db_column='id_direccion')
 
     class Meta:

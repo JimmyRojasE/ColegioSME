@@ -1,4 +1,4 @@
-const form = document.querySelector('#matricula');
+const formulario = document.querySelector('#matricula');
 const rut = document.querySelector('input[name=rut]');
 const region = document.querySelector('select[name=region]');
 const comuna = document.querySelector('select[name=comuna]');
@@ -7,7 +7,7 @@ const toastcontroller = document.querySelector('.toast-message');
 rut.addEventListener('blur', (ev) => {
     if (rut.value == '' || rut.length < 1) return;
 
-    rut.value = rut.value.replace(/(\d)(\d)$/, '$1-$2').replace(/[.]/g, '');;
+    rut.value = rut.value.replace(/(\d)(\d)$/, '$1-$2').replace(/[.]/g, '');
 });
 region.addEventListener('change', async (ev) => {
     comuna.innerHTML = '<option value="" selected>Elija una opcion</option>';
@@ -19,10 +19,10 @@ region.addEventListener('change', async (ev) => {
         comuna.innerHTML += `<option value="${data['id']}">${data['name']}</option>`;
     }
 });
-form.addEventListener('submit', async (ev) => {
+formulario.addEventListener('submit', async (ev) => {
     ev.preventDefault();
 
-    const options = form.querySelectorAll('input, select');
+    const options = formulario.querySelectorAll('input, select');
     let data = {};
     for (let i = 0; i < options.length; i++) {
         const index = options[i];

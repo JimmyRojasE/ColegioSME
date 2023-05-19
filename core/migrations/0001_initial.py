@@ -2,7 +2,6 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import phonenumber_field.modelfields
 
 
 class Migration(migrations.Migration):
@@ -174,7 +173,7 @@ class Migration(migrations.Migration):
                 ('id_colegio', models.AutoField(primary_key=True, serialize=False)),
                 ('nombre_colegio', models.CharField(max_length=50)),
                 ('representante_legal', models.CharField(max_length=50)),
-                ('telefono', phonenumber_field.modelfields.PhoneNumberField(max_length=128, region=None)),
+                ('telefono', models.IntegerField()),
             ],
             options={
                 'db_table': 'colegio',

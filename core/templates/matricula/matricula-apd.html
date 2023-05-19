@@ -83,14 +83,17 @@
             <hr>
             <!-- DIRECCION -->
             <div class="row mb-3">
-                <label for="" class="col-sm-4 mb-3 col-form-label align-self-center">¿Vive en el mismo hogar que el estudiante?</label>
+                <label for="" class="col-sm-4 mb-3 col-form-label align-self-center">¿Vive en el mismo hogar que el
+                    estudiante?</label>
                 <div class="col-sm-7 align-self-center">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="mismoHogarApd" id="vive_con_alumno" value="Si" onclick="ocultarDireccionApd()">
+                        <input class="form-check-input" type="radio" name="mismoHogarApd" id="vive_con_alumno"
+                            value="Si" onclick="ocultarDireccionApd()">
                         <label class="form-check-label" for="mismoHogarApdSi">Si</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="mismoHogarApd" id="vive_con_alumno" value="No" onclick="mostrarDireccionApd()">
+                        <input class="form-check-input" type="radio" name="mismoHogarApd" id="vive_con_alumno"
+                            value="No" onclick="mostrarDireccionApd()">
                         <label class="form-check-label" for="mismoHogarApdNo">No</label>
                     </div>
                 </div>
@@ -132,8 +135,10 @@
                                 <option value="Ñuble">Ñuble</option>
                                 <option value="Los Ríos">Los Ríos</option>
                                 <option value="Atacama">Atacama</option>
-                                <option value="Magallanes y de la Antártica Chilena">Magallanes y de la Antártica Chilena</option>
-                                <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos Ibáñez del Campo</option>
+                                <option value="Magallanes y de la Antártica Chilena">Magallanes y de la Antártica
+                                    Chilena</option>
+                                <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos
+                                    Ibáñez del Campo</option>
                             </select>
                         </div>
                         <div class="col-sm-4 mb-3">
@@ -181,7 +186,7 @@
     <hr>
     <h1>Datos del Apoderado Suplente</h1>
     <!-- DATOS DE LA MADRE-->
-    <fieldset id="datosMadre">
+    <fieldset id="datosSuplente">
         <div>
             <hr>
             <!-- RUN -->
@@ -219,9 +224,9 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 mb-3">
-                    <label for="">Sexo</label>
-                    <select class="form-select" name="id_genero">
-                        <option selected>Elija una opción</option>
+                    <label for="">Genero</label>
+                    <select class="form-select" name="genero">
+                        <option value="" selected>Elija una opción</option>
                         <option value="1">Masculino</option>
                         <option value="2">Femenino</option>
                         <option value="3">Prefiero no responder</option>
@@ -230,7 +235,7 @@
                 <div class="col-sm-4 mb-3">
                     <label for="">Nivel de Estudio</label>
                     <select class="form-select" name="nivel_academico">
-                        <option selected>Elija un Nivel de Estudio</option>
+                        <option value="" selected>Elija un Nivel de Estudio</option>
                         <optgroup label="Enseñanza Básica">
                             <option value="1">Básica Incompleta</option>
                             <option value="2">Básica Completa</option>
@@ -256,14 +261,17 @@
             <hr>
             <!-- DIRECCION -->
             <div class="row mb-3">
-                <label for="" class="col-sm-4 mb-3 col-form-label align-self-center">¿Vive en el mismo hogar que el estudiante?</label>
+                <label for="" class="col-sm-4 mb-3 col-form-label align-self-center">¿Vive en el mismo hogar que el
+                    estudiante?</label>
                 <div class="col-sm-7 align-self-center">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="vive_con_alumno" id="vive_con_alumno" value="Si" onclick="ocultarDireccionSup()">
+                        <input class="form-check-input" type="radio" name="vive_con_alumno" id="vive_con_alumno"
+                            value="Si" onclick="ocultarDireccionSup()">
                         <label class="form-check-label" for="mismoHogarSupSi">Si</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="vive_con_alumno" id="vive_con_alumno" value="No" onclick="mostrarDireccionSup()">
+                        <input class="form-check-input" type="radio" name="vive_con_alumno" id="vive_con_alumno"
+                            value="No" onclick="mostrarDireccionSup()">
                         <label class="form-check-label" for="mismoHogarSupNo">No</label>
                     </div>
                 </div>
@@ -305,14 +313,16 @@
                                 <option value="Ñuble">Ñuble</option>
                                 <option value="Los Ríos">Los Ríos</option>
                                 <option value="Atacama">Atacama</option>
-                                <option value="Magallanes y de la Antártica Chilena">Magallanes y de la Antártica Chilena</option>
-                                <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos Ibáñez del Campo</option>
+                                <option value="Magallanes y de la Antártica Chilena">Magallanes y de la Antártica
+                                    Chilena</option>
+                                <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos
+                                    Ibáñez del Campo</option>
                             </select>
                         </div>
                         <div class="col-sm-4 mb-3">
                             <label for="">Comuna</label>
                             <select class="form-select" name="comuna">
-                                <option selected>Elija una opción</option>
+                                <option value="" selected>Elija una opción</option>
                             </select>
                         </div>
                     </div>
@@ -352,7 +362,8 @@
         </div>
     </fieldset>
     <hr>
-    <p class="text-center" style="color: aliceblue;">Al hacer clic en el botón "Enviar Información", el apoderado indica que toda la información declarada del estudiante es verídica. </p>
+    <p class="text-center" style="color: aliceblue;">Al hacer clic en el botón "Enviar Información", el apoderado indica
+        que toda la información declarada del estudiante es verídica. </p>
     <div class="d-grid gap-2 col-6 mx-auto">
         <button class="btn btn-primary mb-3" type="submit">Enviar información</button>
     </div>
