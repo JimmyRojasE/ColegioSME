@@ -2,6 +2,8 @@ const formulario = document.querySelectorAll('form');
 const rut = document.querySelectorAll('input[name="rut"]');
 const region = document.querySelectorAll('select[name="region"]');
 const comuna = document.querySelectorAll('select[name="comuna"]');
+const toastcontroller = document.querySelector('.toast-message');
+const matricula = document.currentScript.dataset;
 
 rut[0].addEventListener('blur', (ev) => {
     if (ev.target.value.length < 2) return;
@@ -62,9 +64,19 @@ formulario[1].addEventListener('submit', async (ev) => {
         }
     }
     format(data);
+    showMessage('Verificando informacion, porfavor espere.');
 
-    const request = await fetch('http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_padres/1', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+    const request = await fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_padres/${matricula.id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
     const response = await request.json();
+
+    if (response.ok) {
+        showMessage('Informacion valida, redirigiendo...');
+        setTimeout(() => {
+            location.href = `/matricula-apd/${matricula.id}`;
+        }, 4000);
+    } else {
+        showMessage('Hubo un error, intente nuevamente.', 5000);
+    }
 });
 
 function format(obj) {
@@ -91,6 +103,18 @@ function format(obj) {
     delete obj.madre['nombres'];
 
     obj.madre['vive_con_alumno'] = (obj.madre['vive_con_alumno'] === 'true');
+}
+
+function showMessage(message, duration = 0) {
+    toastcontroller.style.display = 'block';
+    toastcontroller.innerHTML = message;
+
+    if (duration > 0) {
+        setTimeout(() => {
+            toastcontroller.style.display = 'none';
+            toastcontroller.innerHTML = '';
+        }, duration);
+    }
 }
 
 function alternarDireccionPdr(bool) {
