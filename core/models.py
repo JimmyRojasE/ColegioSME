@@ -242,11 +242,11 @@ class listaCursos(models.Model):
     nombre_curso = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.id_lista_curso
+        return self.id_lista_curso, self.nombre_curso
 
 class CursoRepetido(models.Model):
     id_curso_repetido = models.AutoField(primary_key=True, verbose_name='Id')
-    id_lista_curso = models.ForeignKey(listaCursos, on_delete=models.PROTECT,verbose_name='Nombre Curso')
+    id_lista_curso = models.ForeignKey('listaCursos', models.DO_NOTHING,db_column='id_lista_curso', verbose_name='Nombre Curso')
     anno_repitencia = models.IntegerField(verbose_name='Año de Repitencia')
     id_matricula = models.ForeignKey('Matricula', models.DO_NOTHING, db_column='id_matricula', verbose_name='Id Matricula')
 

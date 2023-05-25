@@ -8,12 +8,14 @@ const matricula = document.currentScript.dataset;
 rut[0].addEventListener('blur', (ev) => {
     if (ev.target.value.length < 2) return;
 
-    ev.target.value = ev.target.value.replace(/(\d)(\d)$/, '$1-$2').replace(/[.]/g, '');
+    ev.target.value = ev.target.value.replace('-', '');
+    ev.target.value = ev.target.value.replace(/(\w)(\w)$/, '$1-$2').replace(/[.]/g, '');
 });
 rut[1].addEventListener('blur', (ev) => {
     if (ev.target.value.length < 2) return;
 
-    ev.target.value = ev.target.value.replace(/(\d)(\d)$/, '$1-$2').replace(/[.]/g, '');
+    ev.target.value = ev.target.value.replace('-', '');
+    ev.target.value = ev.target.value.replace(/(\w)(\w)$/, '$1-$2').replace(/[.]/g, '');
 });
 region[0].addEventListener('change', async (ev) => {
     const request = await fetch('/static/environment/comunas.json');

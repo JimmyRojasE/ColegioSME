@@ -5,7 +5,6 @@ from django.contrib import messages
 
 # Create your views here readonly.
 def inicio(request):
-   
     return render(request, 'index.html')
 
 def matriculasEst(request):
@@ -21,127 +20,112 @@ def matriculasApd(request, id):
     return render(request, 'matricula/matricula-apd.html', { 'id_matricula': id })
 
 def login (request):
-    data={
-        'form':UsuarioForm()
-    }
     if request.method=='POST':
         try:
-            usuario=Usuario.objects.get(id_usuario=request.POST['id_usuario'], password=request.POST['password'])
-            persona=Persona.objects.get(run=request.POST['id_usuario'])
-            print("usuario=",usuario.id_usuario,usuario.password,usuario.id_rol_usuario,usuario.id_estado_usuario)
-            print("persona=",persona.p_nombre,persona.app_paterno)
-            nombre=persona.p_nombre + ' ' + persona.app_paterno
-            request.session['nombre']=nombre
-            return render(request,'index.html')
+            usuario = Usuario.objects.get(id_usuario=request.POST['id_usuario'], password=request.POST['password'])
+            persona = Persona.objects.get(run=request.POST['id_usuario'])
+            request.session['nombre'] = f'{persona.p_nombre} {persona.app_paterno}'
+
+            return render(request, 'index.html')
         except Usuario.DoesNotExist as e:
-            messages.success(request,'Usuario o Password Incorrectos..')
+            messages.success(request, 'Usuario o contraseña incorrectos...')
         except Persona.DoesNotExist as e:
-            messages.success(request,'Falta Ingresar Datos Personales..')
+            messages.success(request, 'Falta Ingresar Datos Personales...')
         except:
-            messages.success(request,'Ingrese Información Válida ..')
-    return render(request, 'auth/login.html',data)
+            messages.success(request, 'Ingrese Información Válida...')
+
+    return render(request, 'auth/login.html', { 'form': UsuarioForm() })
 
 def logout(request):
-    try:
-        del request.session['nombre']
-    except:
-        return render(request,'index.html')
+    del request.session['nombre']
     return render(request,'index.html')
-
-
 
 def crearProfesor(request):
     return render(request, 'profesor/crear-profesor.html')
 
 def listarCurso(request):
-    cursos=Curso.objects.all()
-    data={
-        'Cursos':cursos
-    }
+    cursos = Curso.objects.all()
 
-    return render(request,'curso/listar-cursos.html',data)
+    return render(request,'curso/listar-cursos.html', { 'cursos': cursos })
 
 def crearCurso(request):
-    data={
-    'form':CursoForm()
+    data = {
+        'form': CursoForm()
     }
+
     if request.method=='POST':
-        formulario=CursoForm(data=request.POST)
+        formulario = CursoForm(data = request.POST)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="listarCurso")
         else:
-            data["form"]=formulario
+            data["form"] = formulario
 
-    return render(request,'curso/crear-curso.html',data)
+    return render(request, 'curso/crear-curso.html', data)
 
-def editarCurso(request,id):
-
-    curso=get_object_or_404(Curso,id_curso=id)
-    data={
+def editarCurso(request, id):
+    curso = get_object_or_404(Curso, id_curso=id)
+    data = {
         'form': CursoForm(instance=curso)
     }
+
     if request.method=='POST':
-        formulario=CursoForm(data=request.POST,instance=curso)
+        formulario = CursoForm(data=request.POST, instance=curso)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="listarCurso")
-        data['form']=formulario
+        data['form'] = formulario
 
     return render(request,'curso/editar-curso.html',data)
 
-def eliminarCurso(request,id):
-    curso=get_object_or_404(Curso,id_curso=id)
+def eliminarCurso(request, id):
+    curso = get_object_or_404(Curso, id_curso=id)
     curso.delete()
     return redirect(to="listarCurso")
 
 def listarColegio(request):
-    colegios=Colegio.objects.all()
-    data={
-        'Cursos':colegios
-    }
-
-    return render(request,'colegio/listar-colegio.html',data)
+    colegios = Colegio.objects.all()
+    return render(request, 'colegio/listar-colegio.html', { 'cursos': colegios })
 
 def crearColegio(request):
-    data={
-    'form':ColegioForm(),
-    'form2':DireccionForm()
+    data = {
+        'form':ColegioForm(),
+        'form2':DireccionForm()
     }
+
     if request.method=='POST':
-        formulario=ColegioForm(data=request.POST)
+        formulario = ColegioForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="listarColegio")
         else:
-            data["form"]=formulario
+            data["form"] = formulario
 
-    return render(request,'colegio/crear-colegio.html',data)
+    return render(request, 'colegio/crear-colegio.html', data)
 
 def editarColegio(request,id):
-
-    colegio=get_object_or_404(Colegio,id_colegio=id)
-    data={
+    colegio = get_object_or_404(Colegio, id_colegio=id)
+    data = {
         'form': ColegioForm(instance=colegio)
     }
+
     if request.method=='POST':
-        formulario=ColegioForm(data=request.POST,instance=colegio)
+        formulario = ColegioForm(data=request.POST,instance=colegio)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="listarColegio")
-        data['form']=formulario
+        data['form'] = formulario
 
-    return render(request,'colegio/editar-colegio.html',data)
+    return render(request, 'colegio/editar-colegio.html', data)
 
-def eliminarColegio(request,id):
-    curso=get_object_or_404(Colegio,id_colegio=id)
+def eliminarColegio(request, id):
+    curso = get_object_or_404(Colegio, id_colegio=id)
     curso.delete()
     return redirect(to="listarColegio")
 
-def listarGrupoFamiliar(request,id):
-    grupoFamiliar=GrupoFamiliar.objects.filter(id_matricula=id)
-    # grupoFamiliar=get_object_or_404(GrupoFamiliar,id_matricula=id)
-    data={
+def listarGrupoFamiliar(request, id):
+    grupoFamiliar = GrupoFamiliar.objects.filter(id_matricula=id)
+    data = {
         'grupoFamiliar': grupoFamiliar,
         'id_matricula': id
     }
@@ -154,91 +138,87 @@ def crearGrupoFamiliar(request, id):
         'id_matricula': id
     }
 
-    if request.method=='POST':
-        formulario=GrupoFamiliarForm(data=request.POST)
-        
+    if request.method == 'POST':
+        formulario = GrupoFamiliarForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
             return redirect(to=f"/listar-grupoFamiliar/{id}")
         else:
-            data["form"]=formulario
+            data["form"] = formulario
 
-    return render(request,'grupoFamiliar/crear-grupoFamiliar.html',data)
+    return render(request, 'grupoFamiliar/crear-grupoFamiliar.html', data)
 
-def editarGrupoFamiliar(request,id,idmatricula):
-
-    grupofamiliar=get_object_or_404(GrupoFamiliar,id_gr_fam=id)
-    data={
+def editarGrupoFamiliar(request, id, id_matricula):
+    grupofamiliar = get_object_or_404(GrupoFamiliar,id_gr_fam=id)
+    data = {
         'form': GrupoFamiliarForm(instance=grupofamiliar)
     }
-    if request.method=='POST':
-        formulario=GrupoFamiliarForm(data=request.POST,instance=grupofamiliar)
+
+    if request.method == 'POST':
+        formulario = GrupoFamiliarForm(data=request.POST,instance=grupofamiliar)
         if formulario.is_valid():
             formulario.save()
-            return redirect(to=f"/listar-grupoFamiliar/{idmatricula}")
-        data['form']=formulario
+            return redirect(to=f"/listar-grupoFamiliar/{id_matricula}")
+        data['form'] = formulario
 
-    return render(request,'grupoFamiliar/editar-grupoFamiliar.html',data)
+    return render(request, 'grupoFamiliar/editar-grupoFamiliar.html', data)
 
-def eliminarGrupoFamiliar(request,id,idmatricula):
-    curso=get_object_or_404(GrupoFamiliar,id_gr_fam=id)
+def eliminarGrupoFamiliar(request, id, id_matricula):
+    curso = get_object_or_404(GrupoFamiliar, id_gr_fam=id)
     curso.delete()
-    return redirect(to=f"listarGrupoFamiliar/{idmatricula}")
+    return redirect(to=f"listarGrupoFamiliar/{id_matricula}")
 
 def crearUsuario(request):
-    return render(request,'usuarios/crear-usuario.html')
+    return render(request, 'usuarios/crear-usuario.html')
 
 def listarUsuario(request):
-    personas=Persona.objects.all()
-    data={
-        'Personas':personas
-    }
-    return render(request,'usuarios/listar-usuario.html',data)
+    personas = Persona.objects.all()
+    return render(request,'usuarios/listar-usuario.html', {'personas': personas })
 
 def editarUsuario(request):
     return render(request,'usuarios/editar-usuario.html')
 
 def eliminarUsuario(request, id):
+    usuario = Usuario.objects.get(id_usuario=id)
+    usuario.delete()
     return redirect(to="listarUsuario")
 
 def crearCursoReprobado(request):
-    data={
-    'form':CursoRepetidoForm()
+    data = {
+        'form': CursoRepetidoForm()
     }
-    if request.method=='POST':
-        formulario=CursoRepetidoForm(data=request.POST)
+
+    if request.method == 'POST':
+        formulario = CursoRepetidoForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="listarCursoRepetido")
         else:
-            data["form"]=formulario
+            data["form"] = formulario
 
-    return render(request,'cursosReprobados/crear-curso-reprobado.html',data)
+    return render(request, 'cursosReprobados/crear-curso-reprobado.html', data)
 
-def editarCursoReprobado(request,id):
-
-    curso=get_object_or_404(CursoRepetido,id=id)
-    data={
+def editarCursoReprobado(request, id):
+    curso = get_object_or_404(CursoRepetido, id=id)
+    data = {
         'form': CursoRepetidoForm(instance=curso)
     }
-    if request.method=='POST':
-        formulario=CursoRepetidoForm(data=request.POST,instance=curso)
+
+    if request.method == 'POST':
+        formulario = CursoRepetidoForm(data=request.POST,instance=curso)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="listarCursoRepetido")
-        data['form']=formulario
+        else:
+            data['form'] = formulario
 
-    return render(request,'cursosReprobados/editar-curso-reprobado.html',data)
+    return render(request, 'cursosReprobados/editar-curso-reprobado.html', data)
 
-def eliminarCursoReprobado(request,id):
-    curso=get_object_or_404(CursoRepetido,id=id)
+def eliminarCursoReprobado(request, id):
+    curso = get_object_or_404(CursoRepetido, id_curso=id)
     curso.delete()
     return redirect(to="listarCursoRepetido")
 
 def listarCursoReprobado(request):
-    cursosRepetidos=CursoRepetido.objects.all()
-    data={
-        'CursosR':cursosRepetidos
-    }
-
-    return render(request,'cursosReprobados/listar-curso-reprobado.html',data)
+    cursos = CursoRepetido.objects.all()
+    return render(request, 'cursosReprobados/listar-curso-reprobado.html', { 'cursos': cursos })
