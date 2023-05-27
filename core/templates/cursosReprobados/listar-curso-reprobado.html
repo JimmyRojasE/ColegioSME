@@ -37,13 +37,13 @@
                     {% for c in CursosR%}
                     <tr>
                         <td>
-                            {{c.id}}
+                            {{c.id_curso_repetido}}
                         </td>                        
                         <td>
-                            {{c.anno_repitencia}}
+                            {{c.id_lista_curso}}
                         </td>
                         <td>
-                            {{c.id_matricula}}
+                            {{c.anno_repitencia}}
                         </td>
                         <td>
                             <a href="{%url 'editarCursoReprobado' c.id %}"class="btn btn-warning">Editar Curso Reprobado</a>

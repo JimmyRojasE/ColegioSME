@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models.signals import post_save 
 from .models import Curso, Colegio, Direccion, GrupoFamiliar, Persona, CursoRepetido,Usuario
 from .forms import CursoForm, ColegioForm, DireccionForm, GrupoFamiliarForm, CursoRepetidoForm,UsuarioForm
 from django.contrib import messages
@@ -28,16 +29,21 @@ def login (request):
         try:
             usuario=Usuario.objects.get(id_usuario=request.POST['id_usuario'], password=request.POST['password'])
             persona=Persona.objects.get(run=request.POST['id_usuario'])
-            print("usuario=",usuario.id_usuario,usuario.password,usuario.id_rol_usuario,usuario.id_estado_usuario)
-            print("persona=",persona.p_nombre,persona.app_paterno)
-            nombre=persona.p_nombre + ' ' + persona.app_paterno
-            request.session['nombre']=nombre
+            nombre=persona.p_nombre + ' ' + persona.app_paterno            
+            request.user={
+                'nombre':nombre,
+                'id':usuario.id_usuario,
+                'rol':usuario.id_rol_usuario.id_rol_usuario,
+                'estado':usuario.id_estado_usuario.id_estado_usuario,
+            }
+
             return render(request,'index.html')
+        
         except Usuario.DoesNotExist as e:
             messages.success(request,'Usuario o Password Incorrectos..')
         except Persona.DoesNotExist as e:
             messages.success(request,'Falta Ingresar Datos Personales..')
-        except:
+        except :
             messages.success(request,'Ingrese Información Válida ..')
     return render(request, 'auth/login.html',data)
 
@@ -95,6 +101,25 @@ def eliminarCurso(request,id):
     curso.delete()
     return redirect(to="listarCurso")
 
+def crearDireccion(request):
+    
+    data={
+    'form':DireccionForm()
+    }
+    if request.method=='POST':
+        formulario=DireccionForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            dato=Direccion.objects.last()
+            data={
+                'direccion':dato
+            }
+            return redirect( to='crearColegio',id='{dato.id_direccion}')
+        else:
+            data["form"]=formulario
+
+    return render(request,'direccion/crear-direccion.html',data)
+
 def listarColegio(request):
     colegios=Colegio.objects.all()
     data={
@@ -104,9 +129,9 @@ def listarColegio(request):
     return render(request,'colegio/listar-colegio.html',data)
 
 def crearColegio(request):
+    
     data={
     'form':ColegioForm(),
-    'form2':DireccionForm()
     }
     if request.method=='POST':
         formulario=ColegioForm(data=request.POST)
@@ -214,6 +239,8 @@ def crearCursoReprobado(request):
             data["form"]=formulario
 
     return render(request,'cursosReprobados/crear-curso-reprobado.html',data)
+
+
 
 def editarCursoReprobado(request,id):
 
