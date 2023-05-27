@@ -38,7 +38,7 @@ def login (request):
 
 def logout(request):
     del request.session['nombre']
-    return render(request,'index.html')
+    return render(request, 'index.html')
 
 def crearProfesor(request):
     return render(request, 'profesor/crear-profesor.html')
@@ -46,14 +46,14 @@ def crearProfesor(request):
 def listarCurso(request):
     cursos = Curso.objects.all()
 
-    return render(request,'curso/listar-cursos.html', { 'cursos': cursos })
+    return render(request, 'curso/listar-cursos.html', { 'cursos': cursos })
 
 def crearCurso(request):
     data = {
         'form': CursoForm()
     }
 
-    if request.method=='POST':
+    if request.method == 'POST':
         formulario = CursoForm(data = request.POST)
         if formulario.is_valid():
             formulario.save()
@@ -69,14 +69,14 @@ def editarCurso(request, id):
         'form': CursoForm(instance=curso)
     }
 
-    if request.method=='POST':
+    if request.method == 'POST':
         formulario = CursoForm(data=request.POST, instance=curso)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="listarCurso")
         data['form'] = formulario
 
-    return render(request,'curso/editar-curso.html',data)
+    return render(request, 'curso/editar-curso.html', data)
 
 def eliminarCurso(request, id):
     curso = get_object_or_404(Curso, id_curso=id)
@@ -93,7 +93,7 @@ def crearColegio(request):
         'form2':DireccionForm()
     }
 
-    if request.method=='POST':
+    if request.method == 'POST':
         formulario = ColegioForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
@@ -103,13 +103,13 @@ def crearColegio(request):
 
     return render(request, 'colegio/crear-colegio.html', data)
 
-def editarColegio(request,id):
+def editarColegio(request, id):
     colegio = get_object_or_404(Colegio, id_colegio=id)
     data = {
         'form': ColegioForm(instance=colegio)
     }
 
-    if request.method=='POST':
+    if request.method == 'POST':
         formulario = ColegioForm(data=request.POST,instance=colegio)
         if formulario.is_valid():
             formulario.save()
