@@ -1,11 +1,11 @@
 {% extends 'baseUsuarios.html' %}
 {% load static %}
+
 {% block styles %}
     <link rel="stylesheet" href="{% static '/css/index.css' %}">
 {% endblock %}
+
 {% block content %}
-
-
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
         <h1 >Administración Cursos Reprobados </h1>
@@ -14,7 +14,7 @@
 </div>
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-        <a href="{%url 'crearCursoReprobado'%}"class="btn btn-primary">Crear Curso</a>
+        <a href="{% url 'crearCursoReprobado' %}"class="btn btn-primary">Crear Curso</a>
     </div>
     
 </div>
@@ -34,29 +34,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for c in CursosR%}
-                    <tr>
-                        <td>
-                            {{c.id_curso_repetido}}
-                        </td>                        
-                        <td>
-                            {{c.id_lista_curso}}
-                        </td>
-                        <td>
-                            {{c.anno_repitencia}}
-                        </td>
-                        <td>
-                            <a href="{%url 'editarCursoReprobado' c.id %}"class="btn btn-warning">Editar Curso Reprobado</a>
-                        </td>
-                        <td>
-                            <a href="{%url 'eliminarCursoReprobado' c.id %}" class="btn btn-danger">Eliminar Curso Reprobado</a>
-                        </td>
-                    </tr>
-            
-                    {%endfor%}  
+
+                    {% for c in cursos %}
+                        
+                    {% endfor %}  
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-{%endblock%}
+{% endblock %}

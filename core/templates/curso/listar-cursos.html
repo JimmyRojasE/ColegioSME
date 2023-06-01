@@ -1,22 +1,21 @@
 {% extends 'baseUsuarios.html' %}
 {% load static %}
+
 {% block styles %}
-    <link rel="stylesheet" href="{% static '/css/index.css' %}">
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
 {% endblock %}
+
 {% block content %}
-
-
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-        <h1 >Administración Cursos</h1>
+        <h1>Administración Cursos</h1>
     </div>
-    
+
 </div>
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-        <a href="{%url 'crearCurso'%}"class="btn btn-primary">Crear Curso</a>
+        <a href="{% url 'crearCurso' %}" class="btn btn-primary">Crear Curso</a>
     </div>
-    
 </div>
 
 <div class="row mt-3">
@@ -34,33 +33,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for c in Cursos%}
+                    {% for c in cursos %}
                     <tr>
-                        <td>
-                            {{c.id_curso}}
-                        </td>
-                        <td>
-                            {{c.nombre_curso}}
-                        </td>
-                        
-                        <td>
-                            {{c.año}}
-                        </td>
-                        <td>
-                            {{c.cantidad_matricula}}
-                        </td>
-                        <td>
-                            <a href="{%url 'editarCurso' c.id_curso%}"class="btn btn-warning">Editar Curso</a>
-                        </td>
-                        <td>
-                            <a href="{%url 'eliminarCurso' c.id_curso%}" class="btn btn-danger">Eliminar Curso</a>
-                        </td>
+                        <td>{{c.id_curso}}</td>
+                        <td>{{c.nombre_curso}}</td>
+                        <td>{{c.año}}</td>
+                        <td>{{c.cantidad_matricula}}</td>
+                        <td><a href="{% url 'editarCurso' c.id_curso %}" class="btn btn-warning">Editar Curso</a></td>
+                        <td><a href="{% url 'eliminarCurso' c.id_curso %}" class="btn btn-danger">Eliminar Curso</a></td>
                     </tr>
-            
-                    {%endfor%}  
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-{%endblock%}
+{% endblock %}

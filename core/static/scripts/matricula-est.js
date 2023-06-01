@@ -1,13 +1,42 @@
-const form = document.querySelector('#matricula');
+const formulario = document.querySelector('#matricula');
 const rut = document.querySelector('input[name=rut]');
 const region = document.querySelector('select[name=region]');
 const comuna = document.querySelector('select[name=comuna]');
 const toastcontroller = document.querySelector('.toast-message');
 
-rut.addEventListener('blur', (ev) => {
-    if (rut.value == '' || rut.length < 1) return;
+rut.addEventListener('blur', async (ev) => {
+    if (ev.target.value.length < 2) return;
 
-    rut.value = rut.value.replace(/(\d)(\d)$/, '$1-$2').replace(/[.]/g, '');;
+    ev.target.value = ev.target.value.replace('-', '');
+    ev.target.value = ev.target.value.replace(/(\w)(\w)$/, '$1-$2').replace(/[.]/g, '');
+
+    const rut = ev.target.value.split('-')[0];
+    const dv = ev.target.value.split('-')[1];
+
+    showMessage('Buscando informacion de la persona...');
+
+    const request = await fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/obtener_persona/${rut}/${dv}`);
+    const response = await request.json();
+
+    if (response.length > 0) {
+        showMessage('Informacion encontrada.', 6000);
+
+        formatApiInfo(response);
+        Object.entries(response[0]).map(entry => {
+            const [key, value] = entry;
+            const input = formulario.querySelector(`input[name=${key}]`);
+
+            if (input !== null) {
+                if (input.type === 'date') {
+                    input.value = value.split('T')[0];
+                } else {
+                    input.value = value;
+                }
+            }
+        });
+    } else {
+        showMessage('No se encontro informacion.', 6000);
+    }
 });
 region.addEventListener('change', async (ev) => {
     comuna.innerHTML = '<option value="" selected>Elija una opcion</option>';
@@ -19,10 +48,10 @@ region.addEventListener('change', async (ev) => {
         comuna.innerHTML += `<option value="${data['id']}">${data['name']}</option>`;
     }
 });
-form.addEventListener('submit', async (ev) => {
+formulario.addEventListener('submit', async (ev) => {
     ev.preventDefault();
 
-    const options = form.querySelectorAll('input, select');
+    const options = formulario.querySelectorAll('input, select');
     let data = {};
     for (let i = 0; i < options.length; i++) {
         const index = options[i];
@@ -59,6 +88,14 @@ function format(data) {
 
     return JSON.stringify(data);
 }
+function formatApiInfo(data) {
+    data = data[0];
+
+    data['nombres'] = data['p_nombre'] + ' ' + data['s_nombre'];
+    delete data['p_nombre'];
+    delete data['s_nombre'];
+}
+
 function showMessage(message, duration = 0) {
     toastcontroller.style.display = 'block';
     toastcontroller.innerHTML = message;

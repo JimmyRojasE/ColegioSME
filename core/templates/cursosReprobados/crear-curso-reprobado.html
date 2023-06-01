@@ -1,13 +1,12 @@
 {% extends 'baseUsuarios.html' %}
 {% load static %}
+
 {% block styles %}
     <link rel="stylesheet" href="{% static '/css/index.css' %}">
 {% endblock %}
+
 {% block content %}
 {% load crispy_forms_tags %}
-
-
-
 <div class="row mt-3 ">    
     <div class="col-12 col-md-6 offset-md-4" >
         <div class="card text-center text-bg-dark " style="width: 18rem;" >
@@ -19,7 +18,7 @@
                 <form action="" class="" id="formulario_contacto" method="POST"> 
                     {% csrf_token %}
         
-                    {{ form | crispy }}
+                    {{ form.anno_repitencia | crispy }}
                     <br>
                     
                     <hr>
