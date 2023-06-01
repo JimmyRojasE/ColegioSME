@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import inicio, matriculasEst, matriculasApd, login,logout,matriculasPdr,matriculasInfoest,crearCurso, crearProfesor,listarCurso,editarCurso,eliminarCurso,listarColegio,editarColegio,eliminarColegio,crearColegio,listarGrupoFamiliar,crearGrupoFamiliar,eliminarGrupoFamiliar,editarGrupoFamiliar,crearUsuario,editarUsuario,listarUsuario,eliminarUsuario,crearCursoReprobado,listarCursoReprobado,editarCursoReprobado,eliminarCursoReprobado
+from .views import *
+
 urlpatterns = [
     path('', inicio, name='inicio'),
     path('matricula-est', matriculasEst),
@@ -30,4 +31,10 @@ urlpatterns = [
     path('editar-curso-reprobado/<id>', editarCursoReprobado, name="editarCursoReprobado"),
     path('crear-curso-reprobado/', crearCursoReprobado, name="crearCursoReprobado"),
     path('listar-curso-reprobado/', listarCursoReprobado, name="listarCursoReprobado"),
+
+
+    ###
+    # APIS
+    ###
+    path('crear-matricula-estudiante', crearMatricula, name='matricula-estudiante')
 ]

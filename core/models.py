@@ -22,14 +22,34 @@ class Administrador(models.Model):
         db_table = 'administrador'
         unique_together = (('id_persona', 'run'),)
 
+class Persona(models.Model):
+    id_persona = models.AutoField(primary_key=True, unique=True)  # The composite primary key (id_persona, run) found, that is not supported. The first column is selected.
+    p_nombre = models.CharField(max_length=30)
+    s_nombre = models.CharField(max_length=30, blank=True, null=True)
+    app_paterno = models.CharField(max_length=30)
+    app_materno = models.CharField(max_length=50)
+    fecha_nac = models.DateField()
+    run = models.IntegerField(unique=True)
+    dv = models.CharField(max_length=1)
+    nacionalidad = models.CharField(max_length=30)
+    telefono_fijo = models.IntegerField()
+    celular = models.IntegerField()
+    email = models.CharField(max_length=50, blank=True, null=True)
+    id_direccion = models.ForeignKey('Direccion', on_delete=models.CASCADE, db_column='id_direccion')
+    id_genero = models.ForeignKey('Genero', on_delete=models.CASCADE, db_column='id_genero')
+
+    class Meta:
+        managed = False
+        db_table = 'persona'
+        unique_together = (('id_persona', 'run'),)
 
 class Alumno(models.Model):
-    id_persona = models.ForeignKey('Persona', models.DO_NOTHING, unique=True, db_column='id_persona')
+    id_persona = models.ForeignKey(Persona, models.DO_NOTHING, unique=True, db_column='id_persona')
     etnia = models.CharField(max_length=30, blank=True, null=True)
     estudiante_prioritario = models.IntegerField()
     enfermedad_cronica = models.CharField(max_length=50, blank=True, null=True)
     seguro_escolar_particular = models.CharField(max_length=50, blank=True, null=True)
-    run = models.OneToOneField('Persona', models.DO_NOTHING, db_column='run', unique=True, primary_key=True, related_name='alumno_run_set')  # The composite primary key (run, id_persona) found, that is not supported. The first column is selected.
+    run = models.ForeignKey(Persona, models.DO_NOTHING, db_column='run', unique=True, related_name='alumno_run_set')  # The composite primary key (run, id_persona) found, that is not supported. The first column is selected.
     discapacidad_fisica = models.CharField(max_length=50, blank=True, null=True)
     id_matricula = models.OneToOneField('Matricula', models.DO_NOTHING, db_column='id_matricula')
     id_estado_alumno = models.ForeignKey('EstadoAlumno', models.DO_NOTHING, db_column='id_estado_alumno')
@@ -395,29 +415,6 @@ class Parentesco(models.Model):
     class Meta:
         managed = False
         db_table = 'parentesco'
-
-
-class Persona(models.Model):
-    id_persona = models.AutoField(primary_key=True , unique=True)  # The composite primary key (id_persona, run) found, that is not supported. The first column is selected.
-    p_nombre = models.CharField(max_length=30)
-    s_nombre = models.CharField(max_length=30, blank=True, null=True)
-    app_paterno = models.CharField(max_length=30)
-    app_materno = models.CharField(max_length=50)
-    fecha_nac = models.DateField()
-    run = models.IntegerField( unique=True)
-    dv = models.CharField(max_length=1)
-    nacionalidad = models.CharField(max_length=30)
-    telefono_fijo = models.IntegerField()
-    celular = models.IntegerField()
-    email = models.CharField(max_length=50, blank=True, null=True)
-    id_direccion = models.ForeignKey(Direccion, on_delete=models.CASCADE, db_column='id_direccion')
-    id_genero = models.ForeignKey(Genero, on_delete=models.CASCADE, db_column='id_genero')
-
-    class Meta:
-        managed = False
-        db_table = 'persona'
-        unique_together = (('id_persona', 'run'),)
-
 
 class Profesor(models.Model):
     id_persona = models.OneToOneField(Persona, models.DO_NOTHING, db_column='id_persona',unique=True, primary_key=True)  # The composite primary key (id_persona, run) found, that is not supported. The first column is selected.

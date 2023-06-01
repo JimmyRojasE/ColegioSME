@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Curso, Colegio, Direccion, GrupoFamiliar, Persona, CursoRepetido,Usuario
-from .forms import CursoForm, ColegioForm, DireccionForm, GrupoFamiliarForm, CursoRepetidoForm,UsuarioForm
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from django.contrib import messages
+from .serializers import *
+from .models import *
+from .forms import *
+import json
 
 # Create your views here readonly.
 def inicio(request):
@@ -222,3 +227,45 @@ def eliminarCursoReprobado(request, id):
 def listarCursoReprobado(request):
     cursos = CursoRepetido.objects.all()
     return render(request, 'cursosReprobados/listar-curso-reprobado.html', { 'cursos': cursos })
+
+
+### MATRICULAS
+@csrf_exempt
+@api_view(['POST'])
+def crearMatricula(request):
+    # GET EXTRA DATA
+    body = json.loads(request.body)
+    genero = Genero.objects.get(id_genero=body['genero'])
+    comuna = Comuna.objects.get(id_comuna=body['comuna'])
+    estado_alumno = EstadoAlumno.objects.get(id_estado_alumno=1)
+
+    # MATRICULA
+    direccion = Direccion.objects.create(
+        direccion = body['direccion'],
+        numero = body['numero'],
+        depto = body['depto'],
+        block = body['block'],
+        id_comuna = comuna)
+    persona = Persona.objects.create(
+        run = body['rut'],
+        dv = body['dv'],
+        p_nombre = body['p_nombre'],
+        s_nombre = body['s_nombre'],
+        app_paterno = body['app_paterno'],
+        app_materno = body['app_materno'],
+        nacionalidad = body['nacionalidad'],
+        fecha_nac = body['fecha_nac'],
+        id_genero = genero,
+        id_direccion = direccion,
+        telefono_fijo = body['telefono_fijo'],
+        celular = body['celular'])
+    matricula = Matricula.objects.create(
+        curso_matricula = body['curso_matricula'])
+    alumno = Alumno.objects.create(
+        id_persona = persona,
+        run = persona,
+        id_matricula = matricula,
+        id_estado_alumno = estado_alumno)
+    
+    # RESPONSE
+    return Response({ 'ok': True, 'id_matricula': matricula.id_matricula })
