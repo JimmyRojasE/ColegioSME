@@ -18,9 +18,35 @@
                 <hr>
                 <form action="" class="" id="formulario_contacto" method="POST"> 
                     {% csrf_token %}
-        
-                    {{ form | crispy }}
-                    {{ form2 | crispy }}
+                    <div class="d-flex justify-content-center mt-3">
+
+                        <a href="{%url 'crearDireccion'%}"class="btn btn-warning">Crear Dirección</a>
+                        
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label for="text" class="form-label">Ingrese Nombre del Colegio</label>
+                            {{ form.nombre_colegio | crispy }}
+                            <input type="text" class="form-control" name="nombre_colegio" id="nombre_colegio" aria-describedby="text">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label for="text" class="form-label">Ingrese Representante Legal</label>
+                            {{ form.representante_legal | crispy }}
+                            <input type="text" class="form-control" name="Representante_colegio" id="Representante_colegio" aria-describedby="text">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label for="text" class="form-label">Ingrese Telefono</label>
+                            {{ form.telefono | crispy }}
+                            <input type="PhoneNumber" class="form-control" name="Telefono_colegio" id="Telefono_colegio" aria-describedby="number">
+                        </div>
+                    </div>
+                   
+                 <!--{{ form | crispy }}
+                    {{ form2 | crispy }}-->
                     <br>
                     
                     <hr>

@@ -6,8 +6,8 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuUsuarios">
       <span class="navbar-toggler-icon"></span>
     </button>
-    {%if request.session.nombre%}
-      <a href="" class="navbar-brand text-info fw-semibold fs-4"> Bienvenido {{request.session.nombre|title }}</a><a href="{%url 'logout'%}"class="btn btn-info">Cerrar Sesión</a>
+    {%if request.user.nombre%}
+      <a href="" class="navbar-brand text-info fw-semibold fs-4"> Bienvenido {{request.user.nombre|title }}</a><a href="{%url 'logout'%}"class="btn btn-info">Cerrar Sesión</a>
     {%else%}
       <a href="{%url 'login'%}" class="btn btn-info">Iniciar Sesión</a>
     {%endif%}

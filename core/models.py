@@ -222,9 +222,14 @@ class Comuna(models.Model):
     nombre_comuna = models.CharField(max_length=50)
     id_region = models.ForeignKey('Region', models.DO_NOTHING, db_column='id_region')
 
+    def __str__(self):
+       return self.nombre_comuna
+
     class Meta:
         managed = False
         db_table = 'comuna'
+    
+   
 
 
 class Curso(models.Model):
@@ -242,6 +247,7 @@ class listaCursos(models.Model):
     nombre_curso = models.CharField(max_length=50)
 
     def __str__(self):
+
         return self.id_lista_curso, self.nombre_curso
 
 class CursoRepetido(models.Model):
@@ -273,6 +279,9 @@ class Direccion(models.Model):
     block = models.CharField(max_length=10, blank=True, null=True)
     id_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='id_comuna')
 
+    def __str__(self):
+       return self.direccion
+    
     class Meta:
         managed = False
         db_table = 'direccion'
