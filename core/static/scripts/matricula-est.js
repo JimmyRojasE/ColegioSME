@@ -4,41 +4,43 @@ const region = document.querySelector('select[name=region]');
 const comuna = document.querySelector('select[name=comuna]');
 const toastcontroller = document.querySelector('.toast-message');
 
-rut.addEventListener('blur', async (ev) => {
-    if (ev.target.value.length < 2) return;
+// rut.addEventListener('blur', async (ev) => {
+//     if (ev.target.value.length < 2) return;
 
-    ev.target.value = ev.target.value.replace('-', '');
-    ev.target.value = ev.target.value.replace(/(\w)(\w)$/, '$1-$2').replace(/[.]/g, '');
+//     ev.target.value = ev.target.value.replace('-', '');
+//     ev.target.value = ev.target.value.replace(/(\w)(\w)$/, '$1-$2').replace(/[.]/g, '');
 
-    const rut = ev.target.value.split('-')[0];
-    const dv = ev.target.value.split('-')[1];
+//     const rut = ev.target.value.split('-')[0];
+//     const dv = ev.target.value.split('-')[1];
 
-    showMessage('Buscando informacion de la persona...');
+//     showMessage('Buscando informacion de la persona...');
 
-    const request = await fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/obtener_persona/${rut}/${dv}`);
-    const response = await request.json();
+//     const request = await fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/obtener_persona/${rut}/${dv}`);
+//     const response = await request.json();
 
-    if (response.length > 0) {
-        showMessage('Informacion encontrada.', 6000);
+//     if (response.length > 0) {
+//         showMessage('Informacion encontrada.', 6000);
 
-        formatApiInfo(response);
-        Object.entries(response[0]).map(entry => {
-            const [key, value] = entry;
-            const input = formulario.querySelector(`input[name=${key}]`);
+//         formatApiInfo(response);
+//         Object.entries(response[0]).map(entry => {
+//             const [key, value] = entry;
+//             const input = formulario.querySelector(`input[name=${key}]`);
 
-            if (input !== null) {
-                if (input.type === 'date') {
-                    input.value = value.split('T')[0];
-                } else {
-                    input.value = value;
-                }
-            }
-        });
-    } else {
-        showMessage('No se encontro informacion.', 6000);
-    }
-});
+//             if (input !== null) {
+//                 if (input.type === 'date') {
+//                     input.value = value.split('T')[0];
+//                 } else {
+//                     input.value = value;
+//                 }
+//             }
+//         });
+//     } else {
+//         showMessage('No se encontro informacion.', 6000);
+//     }
+// });
 region.addEventListener('change', async (ev) => {
+    console.log('Buen dia');
+
     comuna.innerHTML = '<option value="" selected>Elija una opcion</option>';
     const request = await fetch('/static/environment/comunas.json');
     const comunas = await request.json();
@@ -51,26 +53,33 @@ region.addEventListener('change', async (ev) => {
 formulario.addEventListener('submit', async (ev) => {
     ev.preventDefault();
 
-    const options = formulario.querySelectorAll('input, select');
-    let data = {};
-    for (let i = 0; i < options.length; i++) {
-        const index = options[i];
-        data[index.name] = index.value;
+    const query = formulario.querySelectorAll('input, select');
+    let body = {};
+
+    for (let data of query) {
+        body[data.name] = data.value;
     }
-    data = format(data);
+    body = format(body);
+    showMessage('Verificando informacion, porfavor espere...');
 
-    showMessage('Verificando informacion, porfavor espere.');
-
-    const request = await fetch('http://190.161.35.216:8085/cl/csme/matriculas/api/matricula_alumno', { method: 'POST', body: data, headers: { 'Content-Type': 'application/json' } });
+    //REQUEST
+    const request = await fetch('/crear-matricula-estudiante', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        body: body
+    });
     const response = await request.json();
 
-    if (response.ok) {
+    if (response['ok']) {
         showMessage('Informacion valida, redirigiendo...');
-        setTimeout(() => {
-            location.href = `/matricula-infoest/${response.data['id_matricula']}`;
-        }, 4000);
+        console.log(response['id_matricula']);
+        // setTimeout(() => {
+        //     location.href = '/matricula-pdr'
+        // }, 5000);
     } else {
-        showMessage('Hubo un error, intente nuevamente.', 5000);
+        showMessage('Ocurrio un error, intentelo nuevamente.', 5000);
     }
 });
 
@@ -95,7 +104,6 @@ function formatApiInfo(data) {
     delete data['p_nombre'];
     delete data['s_nombre'];
 }
-
 function showMessage(message, duration = 0) {
     toastcontroller.style.display = 'block';
     toastcontroller.innerHTML = message;

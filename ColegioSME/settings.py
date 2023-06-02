@@ -22,11 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-98(zr8%_rp)c5^z4fasdfv!$awj7_rob@q4)hhk^gsa&80-_%6'
 
+SILENCED_SYSTEM_CHECKS = ["auth.W004"]
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    '190.161.35.216',
+    '127.0.0.1'
+]
 
 # Application definition
 
@@ -37,10 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_bootstrap5',
+    'rest_framework',
+    'crispy_forms',
     'core',
-    "crispy_forms",
-    "crispy_bootstrap5",
-    
 ]
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
