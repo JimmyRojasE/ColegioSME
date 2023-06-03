@@ -4,50 +4,44 @@ const region = document.querySelector('select[name=region]');
 const comuna = document.querySelector('select[name=comuna]');
 const toastcontroller = document.querySelector('.toast-message');
 
-// rut.addEventListener('blur', async (ev) => {
-//     if (ev.target.value.length < 2) return;
+rut.addEventListener('blur', async (ev) => {
+    if (ev.target.value.length < 2 || ev.target.value === '') return;
 
-//     ev.target.value = ev.target.value.replace('-', '');
-//     ev.target.value = ev.target.value.replace(/(\w)(\w)$/, '$1-$2').replace(/[.]/g, '');
+    // FORMAT RUN
+    let run = ev.target.value.replace(/[^0-9kK]/g, '')
+    ev.target.value = run.replace(/(\w)(\w)$/, '$1-$2');
 
-//     const rut = ev.target.value.split('-')[0];
-//     const dv = ev.target.value.split('-')[1];
+    // GET INFO ABOUT PERSON
+    const request = await fetch(`/obtener-persona/${run}`);
+    const response = await request.json();
+    
+    // FILL DATA IN FORM
+    Object.entries(response).map(entry => {
+        const [key, val] = entry;
+        console.log({ key, val });
 
-//     showMessage('Buscando informacion de la persona...');
+        const input = formulario.querySelector(`input[name=${key}]`);
+        const select = formulario.querySelector(`select[name=${key}]`);
 
-//     const request = await fetch(`http://190.161.35.216:8085/cl/csme/matriculas/api/obtener_persona/${rut}/${dv}`);
-//     const response = await request.json();
 
-//     if (response.length > 0) {
-//         showMessage('Informacion encontrada.', 6000);
-
-//         formatApiInfo(response);
-//         Object.entries(response[0]).map(entry => {
-//             const [key, value] = entry;
-//             const input = formulario.querySelector(`input[name=${key}]`);
-
-//             if (input !== null) {
-//                 if (input.type === 'date') {
-//                     input.value = value.split('T')[0];
-//                 } else {
-//                     input.value = value;
-//                 }
-//             }
-//         });
-//     } else {
-//         showMessage('No se encontro informacion.', 6000);
-//     }
-// });
+        if (input !== null) {
+            input.value = val;
+        }
+        if (select !== null) {
+            if (select.name === 'region') region.dispatchEvent(new Event('change'))
+            select.value = val;
+        }
+    });
+});
 region.addEventListener('change', async (ev) => {
-    console.log('Buen dia');
+    comuna.innerHTML = '<option value="" selected>Elija una opcion</option>'
 
-    comuna.innerHTML = '<option value="" selected>Elija una opcion</option>';
     const request = await fetch('/static/environment/comunas.json');
-    const comunas = await request.json();
+    const response = await request.json();
 
-    for (let i = 0; i < comunas[region.value].length; i++) {
-        const data = comunas[region.value][i];
-        comuna.innerHTML += `<option value="${data['id']}">${data['name']}</option>`;
+    const comunas = response[ev.target.value];
+    for (let data of comunas) {
+        comuna.innerHTML += `<option value="${data.id}">${data.name}</option>`;
     }
 });
 formulario.addEventListener('submit', async (ev) => {
@@ -60,49 +54,31 @@ formulario.addEventListener('submit', async (ev) => {
         body[data.name] = data.value;
     }
     body = format(body);
-    showMessage('Verificando informacion, porfavor espere...');
-
-    //REQUEST
-    const request = await fetch('/crear-matricula-estudiante', {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        body: body
-    });
+    
+    const request = await fetch('/crear-matricula-estudiante', { headers: { 'Content-Type': 'application/json' }, method: 'POST', body: body});
     const response = await request.json();
 
-    if (response['ok']) {
-        showMessage('Informacion valida, redirigiendo...');
-        console.log(response['id_matricula']);
-        // setTimeout(() => {
-        //     location.href = '/matricula-pdr'
-        // }, 5000);
-    } else {
-        showMessage('Ocurrio un error, intentelo nuevamente.', 5000);
+    if (response.ok) {
+        showMessage('Redirigiendo...');
+        setTimeout(() => {
+            location.href = `/matricula-infoest/${response.id_matricula}`
+        }, 3000);
     }
 });
 
 function format(data) {
-    const nombres = data['nombres'].split(' ');
-    data['p_nombre'] = nombres[0];
-    data['s_nombre'] = nombres.slice(1).join(' ');
-    delete data['nombres'];
+    data['rut'] = data['rut'].replace(/[^0-9kK]/g, '');
 
-    const rut = data['rut'].split('-');
-    data['rut'] = rut[0];
-    data['dv'] = rut[1];
-
-    data['depto'] = data['depto'] == '' ? 0 : data['depto'];
+    data['p_nombre'] = data['nombres'].split(' ')[0];
+    data['s_nombre'] = data['nombres'].split(' ').slice(1).join(' ');
 
     return JSON.stringify(data);
 }
-function formatApiInfo(data) {
-    data = data[0];
+function formatResponse(data) {
+    data['rut'] = `${data['run']}`.replace(/(\w)(\w)$/, '$1-$2');
+    data['nombres'] = `${data['p_nombre']} ${data['s_nombre']}`;
 
-    data['nombres'] = data['p_nombre'] + ' ' + data['s_nombre'];
-    delete data['p_nombre'];
-    delete data['s_nombre'];
+    return data;
 }
 function showMessage(message, duration = 0) {
     toastcontroller.style.display = 'block';

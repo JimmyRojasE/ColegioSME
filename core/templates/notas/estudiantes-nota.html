@@ -1,0 +1,66 @@
+{% extends 'baseUsuarios.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto mb-3" style="max-width: 500px;">
+    <div class="card" >
+        <div class="card-header text-center">
+            <h1>Añadir calificación</h1>
+        </div>
+        <div class="card-body">
+            <form action="">
+                <div class="row g-3 ">
+                    <div class="col-auto">
+                        <label for="nombreCalificacion" class="col-form-label">Nombre de calificación</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" id="nombreCalificacion" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-success">
+                            <i class="bi bi-plus-circle-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+  <div class="card-header text-center">
+    <h1>Nombre curso</h1>
+  </div>
+  <div class="card-body">
+    <div>
+      <table class="table table-sm table-striped ">
+        <thead>
+            <tr class="table-primary">
+                <th>Nombre Completo</th>
+                <th>RUT</th>
+                <th class="text-center" style="width: 50px; max-width: 50px;">Nota</th>
+                <th class="text-center" style="width: 100px; max-width: 120px;">Promedio</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr class="table-light">
+            <td>Nombre Snombre Apellido Sapellido</td>
+            <td>10.101.101-1</td>
+            <td><input type="text" style="width: 50px; max-width: 50px;"></td>
+            <td>
+                <h5 class="text-center" style="width: 100px; max-width: 120px;">5.5</h5>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-center">
+        <button type="button" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

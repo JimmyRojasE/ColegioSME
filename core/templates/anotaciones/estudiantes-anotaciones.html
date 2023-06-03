@@ -1,0 +1,92 @@
+{% extends 'baseUsuarios.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header text-center">
+    <h1>Nombre curso</h1>
+  </div>
+  <div class="card-body">
+    <div>
+      <table class="table table-sm table-striped ">
+        <thead>
+            <tr class="table-primary">
+                <th>Nombre Completo</th>
+                <th>RUT</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr class="table-light">
+            <td>Nombre Snombre Apellido Sapellido</td>
+            <td>10.101.101-1</td>
+            <td class="text-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bi bi-eye-fill"></i> Ver anotaciones</button></td>
+            <td class="text-center"><button class="btn btn-outline-primary"><i class="bi bi-plus-circle-fill"></i> Crear anotación</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h2 class="text-center" id="myModalLabel"> Nombre Snombre</h2> 
+                        <h2 class="text-center" id="myModalLabel"> Apellido Sapellido</h2>
+                    </div>
+                    <div class="row">
+                        <h4 class="modal-title col-11 text-center" id="myModalLabel"> 10.101.101-1</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="row">
+                        <div class="col-1">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#colPositivas"  aria-controls="colPositivas">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+                        <div class="col-11">
+                            <h2>Anotaciones positivas</h2>
+                        </div>
+                    </div>
+                    <div class="collapse" id="colPositivas">
+                        <div class="card card-body">
+                          Algún contenido placeholder para el componente de contracción. Este panel está oculto de forma predeterminada, pero se revela cuando el usuario activa el disparador correspondiente.
+                        </div>
+                    </div> 
+                    <hr>
+                    <div class="row">
+                        <div class="col-1">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#colNegativas"  aria-controls="colNegativas">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+                        <div class="col-11">
+                            <h2>Anotaciones negativas</h2>
+                        </div>
+                    </div>
+                    <div class="collapse" id="colNegativas">
+                        <div class="card card-body">
+                          Algún contenido placeholder para el componente de contracción. Este panel está oculto de forma predeterminada, pero se revela cuando el usuario activa el disparador correspondiente.
+                        </div>
+                    </div> 
+                </div>      
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

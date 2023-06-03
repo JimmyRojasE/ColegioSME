@@ -8,14 +8,17 @@
 from django.db import models
 
 class Alumno(models.Model):
-    run = models.ForeignKey('Persona', on_delete=models.CASCADE, primary_key=True, to_field='run')
+    run = models.ForeignKey('Persona', on_delete=models.CASCADE, primary_key=True)
     id_estado_alumno = models.ForeignKey('EstadoAlumno', on_delete=models.CASCADE, db_column='id_estado_alumno')
-    estudiante_prioritario = models.BooleanField(default=False)
+    estudiante_prioritario = models.BooleanField(null=True)
     enfermedad_cronica = models.CharField(max_length=255, null=True)
     seguro_escolar_particular = models.CharField(max_length=255, null=True)
     discapacidad_fisica = models.CharField(max_length=255, null=True)
-    evaluacion_profesional = models.BooleanField(default=False)
-    pie = models.BooleanField(default=False)
+    evaluacion_profesional = models.BooleanField(null=True)
+    colegio_procedencia = models.CharField(max_length=255, null=True)
+    razon_cambio_colegio = models.CharField(max_length=255, null=True)
+    medio = models.CharField(max_length=255, null=True)
+    pie = models.BooleanField(null=True)
 
 class Region(models.Model):
     id_region = models.AutoField(primary_key=True)
@@ -24,12 +27,20 @@ class Region(models.Model):
 class Comuna(models.Model):
     id_comuna = models.AutoField(primary_key=True)
     nombre_comuna = models.CharField(max_length=255)
-    id_region = models.ForeignKey('Region', on_delete=models.CASCADE, db_column='id_region');
+    id_region = models.ForeignKey('Region', on_delete=models.CASCADE, db_column='id_region')
+
+class Jornada(models.Model):
+    id_jornada = models.AutoField(primary_key=True)
+    nombre_jornada = models.CharField(max_length=20)
+    def __str__(self):
+        return self.nombre_jornada
 
 class Curso(models.Model):
-    id_curso = models.AutoField(primary_key=True)
-    id_lista_curso = models.ForeignKey('ListaCurso', on_delete=models.CASCADE, db_column='id_lista_curso')
-    id_tipo_curso = models.ForeignKey('TipoCurso', on_delete=models.CASCADE, db_column='id_tipo_curso')
+    id_curso = models.CharField(primary_key=True,max_length=45, verbose_name='Código Curso')#cambie el tipo de integer a varchar para que creemos esta llave con los datos del curso y no crear cursos repetidos
+    anio_curso=models.DateField()
+    id_lista_curso = models.ForeignKey('ListaCurso', on_delete=models.CASCADE, db_column='id_lista_curso', verbose_name='Listas de Cursos')
+    id_tipo_curso = models.ForeignKey('TipoCurso', on_delete=models.CASCADE, db_column='id_tipo_curso', verbose_name='Tipo Curso')
+    id_jornada = models.ForeignKey('Jornada', on_delete=models.CASCADE, db_column='id_jornada',verbose_name='Tipo Jornada')
     profesor_jefe = models.ForeignKey('Profesor', on_delete=models.CASCADE, db_column='run_profesor_jefe')
 
 class CursoRepetido(models.Model):
@@ -71,24 +82,24 @@ class ListaCurso(models.Model):
     id_curso = models.AutoField(primary_key=True)
     nombre_curso = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.nombre_curso
+
 class Matricula(models.Model):
     id_matricula = models.AutoField(primary_key=True)
     id_estado_matricula = models.ForeignKey('EstadoMatricula', on_delete=models.CASCADE, db_column='id_estado_matricula')
-    id_curso_matricula = models.ForeignKey('Curso', on_delete=models.CASCADE, db_column='id_curso_matricula', related_name='set_curso_matricula')
+    id_curso_matricula = models.ForeignKey('ListaCurso', on_delete=models.CASCADE, db_column='id_curso_matricula', related_name='set_curso_matricula')
     run_alumno = models.ForeignKey('Alumno', on_delete=models.CASCADE, db_column='run_alumno')
-    colegio_procedencia = models.CharField(max_length=255)
-    id_ultimo_curso_aprobado = models.ForeignKey('Curso', on_delete=models.CASCADE, db_column='id_ultimo_curso_aprobado', related_name='set_ultimo_curso_aprobado')
-    razon_cambio_colegio = models.CharField(max_length=255)
-    medio = models.CharField(max_length=255)
+    id_ultimo_curso_aprobado = models.ForeignKey('ListaCurso', on_delete=models.CASCADE, null=True, db_column='id_ultimo_curso_aprobado', related_name='set_ultimo_curso_aprobado')
 
 class Parentesco(models.Model):
     id_parentesco = models.AutoField(primary_key=True)
     nombre_parentesco = models.CharField(max_length=255)
 
 class Persona(models.Model):
-    run = models.IntegerField(primary_key=True)
+    run = models.CharField(primary_key=True, max_length=10)
     p_nombre = models.CharField(max_length=255)
-    s_nombre = models.CharField(max_length=255)
+    s_nombre = models.CharField(max_length=255, blank=True)
     appaterno = models.CharField(max_length=255)
     apmaterno = models.CharField(max_length=255)
     fecha_nacimiento = models.DateField()
@@ -106,6 +117,9 @@ class Profesor(models.Model):
     mencion = models.CharField(max_length=50)
     magister = models.CharField(max_length=50, null=True)
     doctorado = models.CharField(max_length=50, null=True)
+    def __str__(self):
+        return str(self.run.p_nombre +' '+ self.run.s_nombre + ' '+self.run.appaterno + ' ' + self.run.apmaterno)
+    
 
 class Responsable(models.Model):
     run = models.ForeignKey('Persona', on_delete=models.CASCADE, primary_key=True, db_column='run', to_field='run')
@@ -128,6 +142,8 @@ class TipoApoderado(models.Model):
 class TipoCurso(models.Model):
     id_tipo_curso = models.AutoField(primary_key=True)
     nombre_tipo_curso = models.CharField(max_length=2)
+    def __str__(self):
+        return self.nombre_tipo_curso
 
 class TipoUsuario(models.Model):
     id_tipo_usuario = models.AutoField(primary_key=True)
@@ -139,4 +155,43 @@ class Usuario(models.Model):
     id_tipo_usuario = models.ForeignKey('TipoUsuario', on_delete=models.CASCADE, db_column='id_tipo_usuario')
     id_estado_usuario = models.ForeignKey('EstadoUsuario', on_delete=models.CASCADE, db_column='id_estado_usuario')    
 
-#####################################################################################################################################
+class TipoAsistencia(models.Model):
+    id_tipo_asistencia = models.AutoField(primary_key=True)
+    nombre_tipo_asistencia = models.CharField(max_length=30)
+
+class AsistenciaCurso (models.Model):
+    id_asistencia_curso = models.AutoField(primary_key=True)
+    fecha_asistencia = models.DateField()
+    id_curso = models.ForeignKey('Curso', on_delete=models.PROTECT, db_column='id_curso')
+    run_alumno = models.ForeignKey('Alumno', on_delete=models.PROTECT, db_column='run_alumno')
+    id_tipo_asistencia = models.ForeignKey('TipoAsistencia', on_delete=models.PROTECT, db_column='id_tipo_asistencia')
+
+class ListaAsignatura(models.Model):
+    id_lista_asignatura = models.AutoField(primary_key=True)
+    nombre_lista_asignatura = models.CharField(max_length=50)
+
+class Asignatura(models.Model):
+    id_asignatura = models.CharField(primary_key=True,max_length=30)
+    id_lista_asignatura = models.ForeignKey('ListaAsignatura', on_delete=models.PROTECT, db_column='id_lista_asignatura')
+    id_curso = models.ForeignKey('Curso', on_delete=models.PROTECT, db_column='id_curso')
+    descripcion = models.CharField(max_length=50)
+    run_profesor = models.ForeignKey('Profesor', on_delete=models.PROTECT, db_column='run_profesor')
+
+class Notas(models.Model):
+    id_nota = models.AutoField(primary_key=True)
+    nota = models.FloatField()
+    descripcion_nota = models.CharField(max_length=50)
+    id_asignatura = models.ForeignKey('Asignatura', on_delete=models.PROTECT, db_column='id_asignatura')
+    run_alumno = models.ForeignKey('Alumno', on_delete=models.PROTECT, db_column='run_alumno')
+
+class TipoAnotacion(models.Model):
+    id_tipo_anotacion = models.AutoField(primary_key=True)
+    nombre_tipo_anotacion = models.CharField(max_length=20)
+
+class Anotacion(models.Model):
+    id_anotacion = models.AutoField(primary_key=True)
+    anotacion = models.CharField(max_length=200)
+    fecha_anotacion = models.DateField()
+    id_asignatura = models.ForeignKey('Asignatura', on_delete=models.PROTECT, db_column='id_asignatura')
+    id_tipo_anotacion = models.ForeignKey('TipoAnotacion', on_delete=models.PROTECT, db_column='id-tipo_anotación')
+    run_alumno = models.ForeignKey('Alumno', on_delete=models.PROTECT, db_column='run_alumno')

@@ -2,6 +2,34 @@ const formulario = document.querySelector('#matricula');
 const toastcontroller = document.querySelector('.toast-message');
 const matricula = document.currentScript.dataset;
 
+window.onload = async () => {
+    console.log(matricula);
+
+    const request = await fetch(`/obtener-info-extra/${matricula.id}`);
+    const response = await request.json()
+
+    Object.entries(response).map(entry => {
+        const [key, val] = entry;
+        console.log({ key, val });
+
+        const input = formulario.querySelector(`input[name=${key}]`);
+        const select = formulario.querySelector(`select[name=${key}]`);
+
+        if (input !== null) {
+            if (input.type === 'radio') {
+                if (key === 'pie' && !val) alternarAutorizaEvaluacion(true);
+
+                const checkbox = formulario.querySelector(`input[name=${key}][value=${val}]`);
+                checkbox.checked = true;
+            }
+            input.value = val;
+        }
+        if (select !== null) {
+            select.value = val;
+        }
+    });
+};
+ 
 formulario.addEventListener('submit', async (ev) => {
     ev.preventDefault();
 
