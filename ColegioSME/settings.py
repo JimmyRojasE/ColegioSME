@@ -88,9 +88,9 @@ DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'colegiosme',
-            'USER': 'csme2023',
-            'PASSWORD': 'Colegiosme2023',
-            'HOST': 'db4free.net',
+            'USER': 'root',
+            'PASSWORD': 'root',
+            'HOST': '190.161.35.216',
             'PORT': '3306',
         }
 }
